@@ -1,26 +1,853 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=./uk_tour.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UK Tour</title>
-    <style>
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        font-family: Arial, sans-serif;
-        background: #0a1a33;
-        color: #f1f5ff;
-      }
-      a {
-        color: #22d3ee;
-      }
-    </style>
-  </head>
-  <body>
-    <p>Redirecting to the tour page… If it does not open, <a href="./uk_tour.html">click here</a>.</p>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>7D6N Best of Britain – Tour Presentation</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--panel2:#273449;--text:#e2e8f0;--mut:#94a3b8;--acc:#38bdf8;--acc2:#f59e0b;--good:#22c55e;--bad:#ef4444}
+*{box-sizing:border-box;margin:0}
+body{font-family:Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden}
+#nav{position:fixed;top:0;left:0;right:0;height:52px;background:#0b1222;display:flex;align-items:center;gap:4px;padding:0 14px;z-index:1000;border-bottom:1px solid #334155;overflow-x:auto}
+#nav b{margin-right:12px;color:var(--acc);white-space:nowrap}
+#nav button{background:none;border:0;color:var(--mut);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px;white-space:nowrap}
+#nav button:hover{background:var(--panel)}#nav button.on{background:var(--acc);color:#001018;font-weight:600}
+#fx{margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--mut);white-space:nowrap;font-size:12px}
+#fx select,#fx input{background:#0b1222;border:1px solid #475569;color:var(--text);border-radius:6px;padding:4px;width:auto}#fx input{width:58px}
+#zoom{position:fixed;display:none;z-index:3000;pointer-events:none;background:#0b1222;padding:8px;border-radius:14px;box-shadow:0 20px 60px #000c;border:1px solid var(--acc)}
+#zoom img{display:block;max-width:560px;max-height:70vh;border-radius:8px}#zoom span{display:block;color:var(--text);font-size:13px;margin-top:6px;text-align:center}
+.nbs{margin-left:auto;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:64px;padding-left:14px;border-left:1px dashed #ffffff30}
+.nbs small{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--mut);order:9}
+.nb{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--c);color:#0f172a;font-size:20px;font-weight:900;border:3px solid #fff;box-shadow:0 0 0 3px var(--c),0 4px 12px #0008;margin:0}
+.it:hover .nb,.it.hl .nb{transform:scale(1.15);transition:.2s}
+.it.hl{border-color:var(--acc2);background:#f59e0b22;box-shadow:0 0 0 2px var(--acc2),0 8px 24px #0008}
+.pin{transition:transform .2s,box-shadow .2s}.pin.hl{transform:scale(1.7);box-shadow:0 0 0 4px #fff,0 0 20px 8px var(--acc2);z-index:999}
+.leaflet-marker-icon:has(.pin.hl){z-index:9999!important}
+.hot{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.hc{background:#1e293b99;border:1px solid #ffffff14;border-radius:12px;padding:8px;font-size:12px}.hc .th{width:100%;height:100px;margin-bottom:6px}.hc b{display:block;margin-bottom:4px}.hc a{color:var(--acc)}
+#deck{position:absolute;top:52px;bottom:48px;left:0;right:0}
+.slide{position:absolute;inset:0;padding:26px 40px;overflow:auto;opacity:0;pointer-events:none;transform:translateX(40px);transition:.35s}
+.slide.on{opacity:1;pointer-events:auto;transform:none}
+#foot{position:fixed;bottom:0;left:0;right:0;height:48px;background:#0b1222;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-top:1px solid #334155}
+#foot button{background:var(--acc);border:0;border-radius:8px;padding:8px 18px;font-weight:600;cursor:pointer}
+#bar{height:3px;background:var(--acc2);position:fixed;bottom:48px;left:0;transition:.3s;z-index:5}
+h1{font-size:46px;line-height:1.1}h2{font-size:30px;margin-bottom:4px}h3{font-size:16px;color:var(--acc);margin:14px 0 8px}
+.sub{color:var(--mut);margin-bottom:16px}
+.hero{background:linear-gradient(120deg,#0c4a6e,#1e1b4b 60%,#7c2d12);border-radius:20px;padding:50px;min-height:70%;display:flex;flex-direction:column;justify-content:center}
+.hero p{margin-top:14px;color:#cbd5e1;max-width:700px;font-size:18px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.chip{background:#ffffff1a;padding:6px 14px;border-radius:20px;font-size:13px}
+.grid{display:grid;gap:18px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}.slide{padding:16px}h1{font-size:32px}}
+.card{background:var(--panel);border-radius:14px;padding:18px}
+.stat{text-align:center}.stat .n{font-size:34px;font-weight:700;color:var(--acc2)}.stat .l{color:var(--mut);font-size:13px}
+.map{height:420px;border-radius:14px;border:1px solid #334155;z-index:1}
+.tl{border-left:2px solid #334155;padding-left:16px}.tl div{position:relative;margin-bottom:11px;font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ph{width:120px;height:80px;object-fit:cover;border-radius:10px;display:none;cursor:pointer;flex:none;box-shadow:0 4px 14px #0008;transition:.3s}
+.ph.ok{display:block;animation:rise .6s both}.ph:hover{transform:scale(1.8);z-index:50;position:relative}
+.slide.fit{display:flex;flex-direction:column;overflow:hidden;padding:18px 32px}
+.slide.fit .hero{flex:1;min-height:0;padding:50px 60px}
+.slide.fit .banner{margin-bottom:14px;padding:14px 24px;flex:none}
+.slide.fit .banner h2{font-size:28px}.slide.fit .banner .ghost{font-size:150px;top:-30px}
+.daybody{flex:1;min-height:0;display:grid;grid-template-columns:1.3fr 1fr;gap:18px}
+.daybody>div{min-height:0;display:flex;flex-direction:column;gap:14px}
+.col-scroll{overflow:auto;padding-right:8px}
+.map.fill{flex:1;min-height:200px;height:auto}
+.costc{max-height:46%;overflow:auto;flex:none}
+.it{display:flex;gap:16px;background:#1e293b99;border:1px solid #ffffff14;border-radius:14px;padding:12px;margin-bottom:12px;transition:.25s;flex:none}
+.it:hover{border-color:var(--acc);transform:translateX(4px)}
+.th{width:170px;height:118px;border-radius:10px;flex:none;position:relative;overflow:hidden;background:linear-gradient(135deg,#334155,#0f172a);display:grid;place-items:center;font-size:40px}
+.th .ph{position:absolute;inset:0;width:100%;height:100%;border-radius:0;box-shadow:none}.th .ph:hover{transform:none;position:absolute}
+.it .tm{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.it .tt{font-size:16px;font-weight:600;margin:2px 0 4px}
+.it p{font-size:13px;color:#cbd5e1;line-height:1.5}
+@media(max-width:900px){.daybody{grid-template-columns:1fr;overflow:auto;display:block}.slide.fit{overflow:auto}.th{width:110px;height:90px}}
+.tl div:before{content:"";position:absolute;left:-23px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--acc)}
+.tl b{color:var(--acc2);margin-right:6px}.tl .m:before{background:var(--mut)}.tl span{color:var(--mut)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}th,td{padding:7px 8px;text-align:left;border-bottom:1px solid #334155}
+th{color:var(--mut);font-weight:600}td.r,th.r{text-align:right}tfoot td{font-weight:700;color:var(--acc2)}
+tr.off td{opacity:.4;text-decoration:line-through}
+.tag{font-size:11px;padding:2px 8px;border-radius:10px;background:var(--panel2);color:var(--acc)}
+input[type=number]{background:#0b1222;border:1px solid #475569;color:var(--text);padding:6px 8px;border-radius:8px;width:90px}
+.pill{display:inline-block;background:var(--acc);color:#001018;padding:3px 12px;border-radius:14px;font-weight:700;font-size:13px}
+.bars .row{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:13px}.bars .row span:first-child{width:110px;color:var(--mut)}
+.bar{height:20px;border-radius:5px;transition:.5s;min-width:2px}.t{background:var(--acc)}.d{background:var(--acc2)}
+.big{font-size:40px;font-weight:800}.good{color:var(--good)}.bad{color:var(--bad)}
+.note{font-size:12px;color:var(--mut);margin-top:10px}
+.hotel{background:var(--panel2);border-radius:10px;padding:10px 12px;font-size:13px;margin-top:10px}
+.leaflet-popup-content{color:#0f172a}
+body{background:radial-gradient(1200px 600px at 10% -10%,#1e3a8a55,transparent),radial-gradient(900px 500px at 100% 110%,#9a341255,transparent),var(--bg)}
+.slide{transform:scale(.96) translateY(20px);filter:blur(6px)}.slide.on{transform:none;filter:none}
+.slide.on .card,.slide.on .map,.slide.on .stat{animation:rise .7s both}
+.slide.on .grid>*:nth-child(2){animation-delay:.12s}.slide.on .grid>*:nth-child(3){animation-delay:.24s}.slide.on .grid>*:nth-child(4){animation-delay:.36s}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.card{background:#1e293b99;backdrop-filter:blur(10px);border:1px solid #ffffff14;transition:.25s}
+.card:hover{transform:translateY(-4px);border-color:var(--acc);box-shadow:0 12px 30px #0006}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#0c4a6e,#312e81,#9a3412,#0c4a6e);background-size:300% 300%;animation:shift 14s ease infinite;box-shadow:0 20px 60px #0008}
+@keyframes shift{50%{background-position:100% 100%}}
+.hero h1{font-size:72px;background:linear-gradient(90deg,#fff,#7dd3fc,#fcd34d);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-2px}
+.orb{position:absolute;border-radius:50%;filter:blur(40px);opacity:.5;animation:float 8s ease-in-out infinite}
+@keyframes float{50%{transform:translate(40px,-30px)}}
+.flag{position:absolute;right:50px;top:40px;font-size:150px;opacity:.9;animation:float 6s ease-in-out infinite}
+.banner{position:relative;overflow:hidden;border-radius:18px;padding:22px 28px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.banner .ghost{position:absolute;right:20px;top:-40px;font-size:190px;font-weight:900;opacity:.14;line-height:1}
+.banner .em{position:absolute;right:160px;top:12px;font-size:70px;animation:float 5s ease-in-out infinite}
+.banner>*{position:relative}.banner h2{font-size:34px}
+.pin{width:30px;height:30px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;color:#0f172a;font-weight:800;font-size:13px;box-shadow:0 3px 10px #0008}
+.pin{animation:drop .6s both}@keyframes drop{from{transform:translateY(-30px);opacity:0}}
+.route{stroke-dasharray:10 10;animation:dash 1.2s linear infinite}@keyframes dash{to{stroke-dashoffset:-20}}
+.donut{width:200px;height:200px;border-radius:50%;margin:auto;display:grid;place-items:center}
+.donut div{width:120px;height:120px;border-radius:50%;background:#0f172a;display:grid;place-items:center;text-align:center;font-size:12px;color:var(--mut)}
+.donut div b{font-size:22px;color:var(--text)}
+.leg{display:flex;align-items:center;gap:8px;font-size:13px;margin:6px 0}.leg i{width:12px;height:12px;border-radius:3px}
+.cv{display:inline-block;margin-left:6px;font-size:.78em;font-weight:500;color:var(--mut);white-space:nowrap}
+.big .cv,.n .cv,.stat .cv{display:block;margin:2px 0 0;font-size:13px}
+td.r .cv{display:inline-block;margin-left:8px;font-size:12px}
+td.r{white-space:nowrap}
+.costc{max-height:55%;padding:0;overflow:auto;border-radius:16px;background:#1e293bee;border:1px solid #ffffff1f}
+.costc h3{position:sticky;top:0;margin:0!important;padding:12px 16px;background:linear-gradient(90deg,#0c4a6e,#1e293b);color:#fff;font-size:15px;z-index:2}
+.costc table{font-size:14px}.costc th{padding:8px 14px;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+.costc td{padding:9px 14px;border-bottom:1px solid #ffffff12}.costc td.r{font-weight:700;font-size:15px;color:#fff}.costc td.r .cv{font-weight:500;color:var(--mut)}
+.costc tr:hover td{background:#ffffff0a}
+.costc input[type=checkbox]{width:17px;height:17px;accent-color:var(--acc2);cursor:pointer}
+.costc .tag{margin-left:6px}
+.costc tr.tot td{background:#f59e0b22;color:var(--acc2);font-size:16px;font-weight:800;border-top:2px solid var(--acc2);position:sticky;bottom:0}
+.costc tr.tot td.r{color:var(--acc2)}
+.costc .note{padding:0 16px 12px}
+.bars .row span:last-child{width:auto;min-width:150px}
+.leaflet-container{background:#0b1222}
+/* scrollbars */
+#zoom,#zoom.r,#zoom.l{transform:none!important;right:auto}
+#zoom img{max-width:min(900px,52vw)!important;max-height:68vh!important;min-width:320px!important;min-height:200px!important}
+#zoom .zh{font-size:15px;font-weight:700;background:#0b1222;border-radius:8px;padding:4px 10px;display:inline-block}
+#zoom .zc,#zoom .zh{display:block;text-align:center}
+.hero2{flex:1;min-height:0;border-radius:24px;padding:40px 56px;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:20px;background:linear-gradient(180deg,#7dd3fc 0%,#bae6fd 55%,#fef3c7 100%);color:#0f172a;box-shadow:0 20px 60px #0008;overflow:hidden}
+.hero2 h1{font-size:68px;line-height:1.05;margin:14px 0;color:#0c4a6e;letter-spacing:-1px}.hero2 h1 span{color:#dc2626;font-size:.6em}
+.hero2 p{font-size:20px;color:#1e3a5f;max-width:620px;line-height:1.5}
+.hero2 .chip{background:#0c4a6e;color:#fff}
+.hero2 .art{width:100%;height:100%;max-height:100%}
+.bus{animation:drive 9s ease-in-out infinite alternate}@keyframes drive{from{transform:translateX(200px)}to{transform:translateX(430px)}}
+.cl{animation:cld 14s ease-in-out infinite alternate}.c2{animation-duration:18s}.c3{animation-duration:11s}@keyframes cld{to{transform:translateX(50px)}}
+.plane{animation:fly 12s linear infinite}@keyframes fly{from{transform:translate(-40px,60px)}to{transform:translate(660px,20px)}}
+.ovs .stat{padding:22px}.ovs .stat .n{font-size:56px!important}.ovs .stat .l{font-size:18px!important}
+#legend{display:flex;flex-direction:column;gap:10px;overflow:auto}
+.lg{flex:1;min-height:56px;display:flex;align-items:center;gap:14px;padding:8px 14px;border-radius:14px;cursor:pointer;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 28%,transparent),#ffffff08);border-left:6px solid var(--c);transition:.2s}
+.lg:hover{transform:translateX(6px);background:color-mix(in srgb,var(--c) 40%,transparent)}
+.lg .li{font-size:30px}.lg b{font-size:15px;color:var(--c)}.lg .lt{font-size:18px;font-weight:600}.lg .ls{font-size:13px;color:var(--mut)}
+@media(max-width:900px){.hero2{grid-template-columns:1fr}.hero2 h1{font-size:44px}}
+#zoom.r{left:auto;right:2vw;transform:translateY(-50%)}#zoom.l{left:2vw;right:auto;transform:translateY(-50%)}
+#zoom img{max-width:min(1200px,54vw)!important;min-width:360px!important}
+/* larger type */
+#nav button{font-size:15px}#nav b{font-size:17px}#fx{font-size:13px}
+.hero p{font-size:22px;max-width:820px}.chip{font-size:16px;padding:8px 16px}
+h3{font-size:19px}.sub{font-size:16px}.note{font-size:14px}
+.stat .l,.l{font-size:15px}.stat .n{font-size:40px}
+.it .tm{font-size:14px}.it .tt{font-size:20px}.it p{font-size:16px;line-height:1.55}
+.th{width:190px;height:130px}
+.banner .rt{font-size:16px}.banner h2,.slide.fit .banner h2{font-size:34px}.pill{font-size:15px}
+.banner .dc .l{font-size:13px}.banner .dc .n{font-size:30px}
+.hc{font-size:14px}.hc a{font-size:13px}.hotel{font-size:16px}
+.leg,.bars .row{font-size:16px}
+#legend div{font-size:inherit!important}
+.card li,.card p,.card td,.card th{font-size:16px!important}
+.card h3{font-size:19px!important}
+.costc table{font-size:17px}.costc td.r{font-size:19px}.costc td.r .cv{font-size:15px}.costc .tag{font-size:13px}
+.costc th{font-size:13px}.costc tr.tot td{font-size:20px}
+table{font-size:16px}th,td{font-size:16px}
+input[type=number]{font-size:16px;width:110px}
+#foot span,#foot button{font-size:15px}
+.donut div{font-size:14px}.donut div b{font-size:26px}
+.big{font-size:44px}.nbs small{font-size:11px}
+.leaflet-tooltip{font-size:15px;font-weight:600}
+.costc td{font-size:17px!important}.costc td.r{font-size:19px!important}.costc td.r .cv{font-size:15px!important}.costc th{font-size:13px!important}.costc tr.tot td{font-size:20px!important}.card .it p{font-size:16px!important}.costc{max-height:62%}
+.costc h3{padding:8px 14px;font-size:17px}
+.costc table{font-size:16px}
+.costc th{padding:5px 12px;font-size:12px}
+.costc td{padding:4px 12px;line-height:1.2}
+.costc td.r{font-size:18px}
+.costc td.r .cv{font-size:14px;margin-left:6px;color:#cbd5e1}
+.costc .tag{font-size:12px;padding:1px 7px}
+.costc input[type=checkbox]{width:20px;height:20px}
+.costc tr.tot td{font-size:19px;padding:7px 12px}
+.costc tr.tot td.r .cv{font-size:14px;color:#fcd34d}
+.costc .note{display:none}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#0b122288;border-radius:10px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#38bdf8,#818cf8);border-radius:10px;border:2px solid #0f172a}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#7dd3fc,#f59e0b)}
+::-webkit-scrollbar-corner{background:transparent}
+#zoom{left:50%;top:50%;transform:translate(-50%,-50%);padding:12px;border-radius:18px;max-width:94vw}
+#zoom img{max-width:min(1200px,88vw);max-height:78vh;min-width:420px;min-height:260px;object-fit:contain;background:#000;border-radius:10px}
+#zoom .zc{color:#fff;font-size:16px;font-weight:600;text-align:center;margin-top:8px}
+#zoom .zh{color:var(--acc2);font-size:13px;text-align:center;margin-top:2px}
+/* perf: no blur filters, cheap transitions */
+.slide{filter:none!important;transform:translateY(12px);transition:opacity .2s,transform .2s;visibility:hidden}
+.slide.on{transform:none;visibility:visible}
+.card{backdrop-filter:none;background:#1e293bcc}
+.slide.on .card,.slide.on .map,.slide.on .stat{animation-duration:.35s}
+h2{font-size:32px;font-weight:800;background:linear-gradient(90deg,#fff,#7dd3fc);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block;position:relative;padding-bottom:8px}
+h2:after{content:"";position:absolute;left:0;bottom:0;width:60px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.banner{background:linear-gradient(110deg,color-mix(in srgb,var(--c) 45%,#0f172a),#0f172a 70%);border:1px solid color-mix(in srgb,var(--c) 50%,transparent);box-shadow:0 10px 30px #0006;border-radius:18px;padding:16px 24px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:16px;overflow:hidden;position:relative}
+.banner .ghost{position:absolute;right:170px;top:-34px;font-size:150px;font-weight:900;color:var(--c);opacity:.12;line-height:1;pointer-events:none}
+.banner .bl{display:flex;align-items:center;gap:18px;position:relative;min-width:0}
+.banner .ic{font-size:44px;width:76px;height:76px;flex:none;border-radius:20px;display:grid;place-items:center;background:#ffffff14;border:1px solid #ffffff22}
+.banner .bt{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.banner h2{font-size:30px;margin:4px 0 0;padding-bottom:0;background:none;color:#fff;-webkit-text-fill-color:#fff}.banner h2:after{display:none}
+.banner .rt{font-size:13px;color:#cbd5e1;margin-top:4px}.banner .km{background:#ffffff1f;border-radius:10px;padding:1px 8px;margin-left:6px;font-size:12px}
+.dots{display:flex;gap:5px}.dots i{width:9px;height:9px;border-radius:50%;background:#ffffff40;cursor:pointer;transition:.2s}.dots i:hover{background:#fff}.dots i.cur{background:var(--c);width:24px;border-radius:5px}
+.banner .dc{position:relative;flex:none;text-align:center;background:#0b1222cc;border:1px solid #ffffff22;border-radius:14px;padding:8px 18px}
+.banner .dc .n{font-size:26px;font-weight:800;color:var(--acc2)}.banner .dc .l{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+.slide.fit .banner h2{font-size:30px}
+@media(max-width:900px){.banner .ghost{display:none}.banner{flex-wrap:wrap}}
+/* final type scale: --s scales everything (A-/A+ in nav) */
+html{--s:1}
+body{font-size:calc(18px*var(--s))}
+#nav button{font-size:calc(17px*var(--s))}#nav b{font-size:calc(20px*var(--s))}#fx{font-size:calc(14px*var(--s))}#fx button{background:var(--panel);color:var(--text);border:1px solid #475569;border-radius:8px;padding:4px 10px;cursor:pointer;font-weight:700;font-size:15px}
+.hero2 h1{font-size:calc(80px*var(--s))}.hero2 p{font-size:calc(24px*var(--s))}.chip{font-size:calc(18px*var(--s))}.pill{font-size:calc(17px*var(--s))}
+h2{font-size:calc(40px*var(--s))}h3{font-size:calc(22px*var(--s))}.sub{font-size:calc(19px*var(--s))}.note{font-size:calc(16px*var(--s))}
+.stat .l,.l{font-size:calc(18px*var(--s))}.stat .n{font-size:calc(46px*var(--s))}.ovs .stat .n{font-size:calc(64px*var(--s))!important}.ovs .stat .l{font-size:calc(21px*var(--s))!important}
+.banner h2,.slide.fit .banner h2{font-size:calc(40px*var(--s))}.banner .rt{font-size:calc(19px*var(--s))}.banner .dc .n{font-size:calc(34px*var(--s))}.banner .dc .l{font-size:calc(15px*var(--s))}
+.it .tm{font-size:calc(16px*var(--s))}.it .tt{font-size:calc(24px*var(--s))}.card .it p,.it p{font-size:calc(19px*var(--s))!important}
+.nb{width:calc(42px*var(--s));height:calc(42px*var(--s));font-size:calc(22px*var(--s))}.nbs small{font-size:calc(13px*var(--s))}
+.th{width:calc(210px*var(--s));height:calc(145px*var(--s))}
+.hc{font-size:calc(17px*var(--s))}.hc a{font-size:calc(15px*var(--s))}.hotel{font-size:calc(18px*var(--s))}
+table,th,td{font-size:calc(19px*var(--s))}.card li,.card p,.card td,.card th{font-size:calc(19px*var(--s))!important}.card h3{font-size:calc(22px*var(--s))!important}
+.costc td{font-size:calc(20px*var(--s))!important}.costc td.r{font-size:calc(22px*var(--s))!important}.costc td.r .cv{font-size:calc(17px*var(--s))!important}.costc th{font-size:calc(15px*var(--s))!important}.costc tr.tot td{font-size:calc(24px*var(--s))!important}.costc h3{font-size:calc(20px*var(--s))!important}.costc .tag{font-size:calc(15px*var(--s))}
+.leg,.bars .row{font-size:calc(19px*var(--s))}.lg b{font-size:calc(17px*var(--s))}.lg .lt{font-size:calc(22px*var(--s))}.lg .ls{font-size:calc(15px*var(--s))}
+.big{font-size:calc(52px*var(--s))}.donut div{font-size:calc(16px*var(--s))}.donut div b{font-size:calc(30px*var(--s))}
+input[type=number]{font-size:calc(18px*var(--s))}#foot span,#foot button{font-size:calc(17px*var(--s))}
+.leaflet-tooltip{font-size:calc(17px*var(--s))}#zoom .zc{font-size:calc(20px*var(--s))}#zoom .zh{font-size:calc(18px*var(--s))}
+/* (old journal theme disabled)
+:root{--bg:#fff4dc;--panel:#ffffff;--panel2:#fef3c7;--text:#1f2937;--mut:#4b5563;--acc:#2563eb;--acc2:#ea580c;--good:#15803d;--bad:#b91c1c;--ink:#1f2937}
+body{background:#fff4dc!important;color:var(--ink)}
+#nav{background:var(--ink);border-bottom:4px solid #fde047}#nav b{color:#fde047}
+#nav button{color:#e5e7eb;border:2px solid transparent;font-weight:600}#nav button:hover{background:#374151}
+#nav button.on{background:#fde047;color:var(--ink);border-color:#fff;transform:rotate(-1.5deg)}
+#fx,#fx small{color:#e5e7eb}#fx input{background:#fff;color:var(--ink);border:2px solid #fde047}#fx button{background:#fde047;color:var(--ink);border:0}
+#foot{background:var(--ink);border-top:4px solid #fde047}#foot button{background:#fde047;color:var(--ink);border:2px solid #fff;box-shadow:3px 3px 0 #0006}#foot button:hover{background:#fff}#foot span{color:#e5e7eb!important}
+#bar{background:#f97316;height:5px}
+h2{background:none!important;-webkit-text-fill-color:var(--ink)!important;color:var(--ink)!important}
+h2:after{background:#f97316!important;height:6px;border-radius:3px;width:70px}
+h3{color:#c2410c}.sub,.note{color:#4b5563}
+.card{background:#fff!important;color:var(--ink);border:3px solid var(--ink)!important;border-radius:18px;box-shadow:5px 5px 0 var(--ink);backdrop-filter:none}
+.card:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink);border-color:var(--ink)}
+.stat .l,.l{color:#4b5563}.stat .n{color:#c2410c}
+.ovs .stat:nth-child(1){background:#fde68a!important}.ovs .stat:nth-child(2){background:#bfdbfe!important}.ovs .stat:nth-child(3){background:#fbcfe8!important}.ovs .stat:nth-child(4){background:#bbf7d0!important}
+.ovs .stat .l{color:var(--ink)}
+.map{border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);border-radius:18px}
+.pill{color:var(--ink)!important;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);transform:rotate(-2deg)}
+.chip{background:#fff;color:var(--ink);border:2px solid var(--ink);font-weight:600}
+.hero2{background:#9ad3ff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink)}
+.hero2 .chip{background:#fff;color:var(--ink)}
+.hero2 h1 span{color:#dc2626}
+.banner{background:var(--c)!important;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);color:var(--ink)}
+.banner .ghost{color:var(--ink)!important;opacity:.1}
+.banner h2,.slide.fit .banner h2{color:var(--ink)!important;-webkit-text-fill-color:var(--ink)!important}
+.banner .rt{color:var(--ink)}.banner .km{background:#fff;color:var(--ink);border:2px solid var(--ink);font-weight:700}
+.banner .ic{background:#fff;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-4deg)}}
+.banner .dc{background:#fff;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}.banner .dc .n{color:#c2410c}.banner .dc .l{color:var(--ink)}
+.banner .pill{background:#fff!important}
+.dots i{background:#1f293755}.dots i:hover{background:var(--ink)}.dots i.cur{background:var(--ink)}
+.it{background:#fff!important;border:3px solid var(--ink)!important;border-radius:16px;box-shadow:4px 4px 0 var(--ink)}
+.it:hover{border-color:var(--ink);transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.it.hl{background:#fef08a!important;box-shadow:7px 7px 0 #ea580c;border-color:var(--ink)}
+.it .tm{color:var(--ink)!important;background:var(--c0,#fde68a);display:inline-block;padding:1px 10px;border-radius:8px;border:2px solid var(--ink);font-weight:800}
+.it .tt{color:var(--ink)}.it p,.card .it p{color:#374151}
+.th{background:#e5e7eb!important;border:4px solid #fff;outline:2px solid var(--ink);box-shadow:3px 4px 0 #0003;transform:rotate(-2.5deg);border-radius:6px}
+.it:nth-child(even) .th{transform:rotate(2.5deg)}.th .ph{border-radius:0}
+.nb{border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);color:var(--ink)}
+.nbs{border-left:2px dashed var(--ink)}.nbs small{color:var(--ink);font-weight:700}
+.pin{border:3px solid var(--ink);color:var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.pin.hl{box-shadow:0 0 0 4px #fde047,0 0 0 7px var(--ink)}
+.hotel,.hc{background:#fef3c7;border:2px solid var(--ink);color:var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink)}.hc a{color:#1d4ed8;font-weight:700}
+table,th,td{color:var(--ink)}th{color:#4b5563}th,td{border-bottom:2px solid #1f293722}
+.tag{background:#fde68a;color:#7c2d12;border:1.5px solid var(--ink);font-weight:700}
+.costc{background:#fff!important;border-radius:18px}
+.costc h3{background:var(--ink)!important;color:#fde047!important;border-radius:0}
+.costc tr:hover td{background:#fef3c7}
+.costc td.r{color:var(--ink)!important}.costc td.r .cv{color:#6b7280!important}
+.costc tr.tot td{background:#fde047!important;color:var(--ink)!important;border-top:3px solid var(--ink)}.costc tr.tot td.r .cv{color:#374151!important}
+tr.off td{opacity:.35}
+input[type=number]{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.bars .row span:first-child{color:#374151;font-weight:600}.t{background:#2563eb}.d{background:#f97316}.bar{border:2px solid var(--ink);border-radius:6px;height:22px}
+.donut div{background:#fff;color:#4b5563;border:3px solid var(--ink)}.donut div b{color:var(--ink)}.donut{border:3px solid var(--ink)}
+.leg i{border:2px solid var(--ink)}
+.lg{background:#fff;border:3px solid var(--ink);border-left:12px solid var(--c);box-shadow:4px 4px 0 var(--ink)}
+.lg:hover{background:#fef3c7;transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.lg b{color:#c2410c}.lg .lt{color:var(--ink)}.lg .ls{color:#4b5563}
+.good{color:#15803d}.bad{color:#b91c1c}
+#zoom{background:#fff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink)}
+#zoom .zc{color:var(--ink)}#zoom .zh{background:#fde047;color:var(--ink);border:2px solid var(--ink)}
+.leaflet-tooltip{background:#fff;color:var(--ink);border:2px solid var(--ink);font-weight:700}
+::-webkit-scrollbar-track{background:#fde68a;border-radius:10px}
+::-webkit-scrollbar-thumb{background:var(--ink)!important;border:2px solid #fde68a;border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:#ea580c!important}
+*/
+/* ===== Dark professional theme ===== */
+:root{--bg:#0b1220;--panel:#121c2e;--panel2:#18253b;--text:#e5e7eb;--mut:#94a3b8;--acc:#d4af37;--acc2:#d4af37;--good:#5fc48a;--bad:#e57373;--ln:#22314a}
+body{background:#0b1220!important;color:var(--text)}
+#nav{background:#080e1a;border-bottom:1px solid var(--ln)}#nav b{color:#d4af37;letter-spacing:.04em}
+#nav button{color:#9fb0c8;border:0;font-weight:500}#nav button:hover{background:#16233a;color:#fff}
+#nav button.on{background:#d4af37;color:#0b1220;transform:none;font-weight:700}
+#fx,#fx small{color:#9fb0c8}#fx input{background:#0b1220;color:var(--text);border:1px solid var(--ln)}#fx button{background:#16233a;color:var(--text);border:1px solid var(--ln)}
+#foot{background:#080e1a;border-top:1px solid var(--ln)}#foot button{background:#d4af37;color:#0b1220;border:0;box-shadow:none}#foot button:hover{background:#e6c453}#foot span{color:#9fb0c8!important}
+#bar{background:#d4af37;height:3px}
+h2{background:none!important;-webkit-text-fill-color:#f1f5f9!important;color:#f1f5f9!important;font-weight:700}
+h2:after{background:#d4af37!important;height:3px;width:48px}
+h3{color:#d4af37;letter-spacing:.04em}.sub,.note{color:var(--mut)}
+.card{background:#121c2e!important;color:var(--text);border:1px solid var(--ln)!important;border-radius:12px;box-shadow:0 4px 18px #0006}
+.card:hover{transform:translateY(-2px);border-color:#3b4f72!important;box-shadow:0 8px 24px #0008}
+.stat .n{color:#d4af37}.stat .l,.l{color:var(--mut)}
+.ovs .stat{border-top:3px solid #d4af37!important}.ovs .stat:nth-child(2){border-top-color:#5b9bd5!important}.ovs .stat:nth-child(3){border-top-color:#4fb3a3!important}.ovs .stat:nth-child(4){border-top-color:#c47a8a!important}
+.ovs .stat .l{color:var(--mut)}
+.map{border:1px solid var(--ln);box-shadow:0 4px 18px #0006;border-radius:12px}
+.pill{color:#0b1220!important;border:0;box-shadow:none;transform:none;font-weight:700;letter-spacing:.06em}
+.chip{background:#16233a;color:#cbd5e1;border:1px solid var(--ln);font-weight:500}
+.hero2{background:#0f1b2d;border:1px solid var(--ln);box-shadow:0 12px 40px #0008;color:var(--text)}
+.hero2 h1{color:#f8fafc}.hero2 h1 span{color:#d4af37}.hero2 p{color:#b6c2d4}.hero2 .chip{background:#16233a;color:#cbd5e1}
+.hero2 .art{background:#183253;border-radius:18px;padding:10px;border:1px solid #2a4468}
+.banner{background:#121c2e!important;border:1px solid var(--ln);border-left:8px solid var(--c);box-shadow:0 4px 18px #0006;color:var(--text)}
+.banner .ghost{color:var(--c)!important;opacity:.1}
+.banner h2,.slide.fit .banner h2{color:#f8fafc!important;-webkit-text-fill-color:#f8fafc!important}
+.banner .rt{color:var(--mut)}.banner .km{background:#1f2e48;color:#cbd5e1;border:0}
+.banner .ic{background:#16233a;border:1px solid var(--ln);box-shadow:none;animation:none}
+.banner .dc{background:#0b1220;border:1px solid var(--ln);box-shadow:none}.banner .dc .n{color:#d4af37}.banner .dc .l{color:var(--mut)}
+.dots i{background:#334155}.dots i:hover{background:#94a3b8}.dots i.cur{background:var(--c)}
+.it{background:#121c2e!important;border:1px solid var(--ln)!important;border-left:5px solid var(--c0)!important;border-radius:12px;box-shadow:none}
+.it:hover{background:#16233a!important;border-color:#3b4f72!important;border-left-color:var(--c0)!important;transform:none;box-shadow:0 6px 18px #0007}
+.it.hl{background:#1c2b45!important;border-color:#d4af37!important;box-shadow:0 0 0 2px #d4af3788}
+.it .tm{color:var(--c0)!important;background:none;border:0;padding:0;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.it .tt{color:#f1f5f9}.it p,.card .it p{color:#b6c2d4}
+.th{background:#0b1220!important;border:1px solid var(--ln);outline:0;box-shadow:none;transform:none;border-radius:8px}
+.it:nth-child(even) .th{transform:none}.th .ph{border-radius:0}
+.nb{border:2px solid #0b1220;box-shadow:0 2px 6px #0008;color:#0b1220}
+.nbs{border-left:1px dashed #334155}.nbs small{color:var(--mut);font-weight:600}
+.pin{border:2px solid #fff;color:#0b1220;box-shadow:0 2px 6px #0009}.pin.hl{box-shadow:0 0 0 4px #d4af37,0 0 14px 6px #d4af3777}
+.hotel,.hc{background:#16233a;border:1px solid var(--ln);color:var(--text);border-radius:10px;box-shadow:none}.hc a{color:#8ab4f8;font-weight:600}
+table,th,td{color:var(--text)}th{color:var(--mut)}th,td{border-bottom:1px solid var(--ln)}
+.tag{background:#1f2e48;color:#9fc3ee;border:0;font-weight:600}
+.costc{background:#121c2e!important}
+.costc h3{background:#0f1b2d!important;color:#d4af37!important;border-bottom:1px solid var(--ln)}
+.costc tr:hover td{background:#16233a}
+.costc td.r{color:#f8fafc!important}.costc td.r .cv{color:#94a3b8!important}
+.costc tr.tot td{background:#1a2740!important;color:#d4af37!important;border-top:2px solid #d4af37}.costc tr.tot td.r .cv{color:#b6c2d4!important}
+tr.off td{opacity:.35}
+input[type=number]{background:#0b1220;color:var(--text);border:1px solid var(--ln)}
+.bars .row span:first-child{color:var(--mut);font-weight:500}.t{background:#5b9bd5}.d{background:#d4af37}.bar{border:0;border-radius:4px;height:20px}
+.donut{border:0}.donut div{background:#0b1220;color:var(--mut);border:0}.donut div b{color:#f8fafc}.leg i{border:0}
+.lg{background:#121c2e;border:1px solid var(--ln);border-left:6px solid var(--c);box-shadow:none}
+.lg:hover{background:#18253b;transform:translateX(4px);box-shadow:none}
+.lg b{color:var(--c)}.lg .lt{color:#f1f5f9}.lg .ls{color:var(--mut)}
+.good{color:var(--good)}.bad{color:var(--bad)}
+#zoom{background:#0b1220;border:1px solid #3b4f72;box-shadow:0 20px 60px #000c}
+#zoom .zc{color:#f1f5f9}#zoom .zh{background:#16233a;color:#d4af37;border:0}
+.leaflet-tooltip{background:#0b1220;color:#f1f5f9;border:1px solid #3b4f72;font-weight:600}
+::-webkit-scrollbar-track{background:#0b1220;border-radius:10px}
+::-webkit-scrollbar-thumb{background:#334155!important;border:2px solid #0b1220;border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:#d4af37!important}
+.slide.on .card,.slide.on .it{animation:rise .4s both}
+/* ===== Vibrant dark: richer blues, saturated flat accents ===== */
+:root{--bg:#0a1a33;--panel:#11284a;--panel2:#16335d;--ln:#244c82;--mut:#a9bbd6;--acc:#22d3ee;--acc2:#fbbf24;--text:#f1f5ff}
+body{background:#0a1a33!important}
+#nav,#foot{background:#071326;border-color:#244c82}#nav b{color:#22d3ee}
+#nav button{color:#b8c8e2}#nav button:hover{background:#16335d}#nav button.on{background:#22d3ee;color:#04202e}
+#foot button{background:#22d3ee;color:#04202e}#foot button:hover{background:#67e8f9}#bar{background:#fbbf24;height:4px}
+h2:after{background:#22d3ee!important}h3{color:#22d3ee}
+.card{background:#11284a!important;border:1px solid #244c82!important}
+.card:hover{border-color:#22d3ee!important;box-shadow:0 0 0 1px #22d3ee,0 10px 28px #0009}
+.stat .n{color:#fbbf24}
+.ovs .stat:nth-child(1){background:#14345f!important;border-top:5px solid #22d3ee!important}.ovs .stat:nth-child(1) .n{color:#22d3ee}
+.ovs .stat:nth-child(2){background:#3a2f12!important;border-top:5px solid #fbbf24!important}.ovs .stat:nth-child(2) .n{color:#fbbf24}
+.ovs .stat:nth-child(3){background:#2d1b4a!important;border-top:5px solid #c084fc!important}.ovs .stat:nth-child(3) .n{color:#c084fc}
+.ovs .stat:nth-child(4){background:#0f3a35!important;border-top:5px solid #34d399!important}.ovs .stat:nth-child(4) .n{color:#34d399}
+.ovs .stat .l{color:#e2ecff}
+.map{border:2px solid #244c82}
+.hero2{background:#0d2a52;border:1px solid #244c82}.hero2 h1 span{color:#fbbf24}.hero2 .art{background:#2f6fb3;border:0}
+.hero2 .chip,.chip{background:#16335d;border:1px solid #2f5b98;color:#e2ecff}
+.banner{background:var(--c)!important;border:0;border-radius:16px;box-shadow:0 8px 24px #0008;color:#06182c}
+.banner .ghost{color:#06182c!important;opacity:.13}
+.banner h2,.slide.fit .banner h2{color:#06182c!important;-webkit-text-fill-color:#06182c!important}
+.banner .rt{color:#0b2540;font-weight:500}.banner .km{background:#06182c;color:#fff}
+.banner .ic{background:#06182c22;border:0}
+.banner .pill{background:#06182c!important;color:#fff!important}
+.banner .dc{background:#06182c;border:0}.banner .dc .n{color:#fbbf24}.banner .dc .l{color:#cfe0f7}
+.dots i{background:#06182c55}.dots i:hover{background:#06182c}.dots i.cur{background:#06182c}
+.it{background:color-mix(in srgb,var(--c0) 9%,#11284a)!important;border:1px solid #244c82!important;border-left:6px solid var(--c0)!important}
+.it:hover{background:color-mix(in srgb,var(--c0) 18%,#11284a)!important;border-color:var(--c0)!important;box-shadow:0 8px 22px #0008}
+.it.hl{background:color-mix(in srgb,var(--c0) 28%,#11284a)!important;border-color:#fbbf24!important;box-shadow:0 0 0 3px #fbbf2499}
+.it .tm{background:var(--c0);color:#06182c!important;padding:2px 10px;border-radius:6px;font-weight:800}
+.it .tt{color:#fff}.it p,.card .it p{color:#d3def2}
+.th{border:2px solid #244c82}
+.nb{box-shadow:0 0 0 3px #06182c}
+.pin{border:2px solid #06182c;box-shadow:0 0 0 2px #fff,0 3px 8px #0009}
+.hotel,.hc{background:#16335d;border:1px solid #2f5b98}.hc a{color:#67e8f9}
+th,td{border-bottom:1px solid #244c82}th{color:#a9bbd6}
+.tag{background:#16335d;color:#67e8f9;border:1px solid #2f5b98}
+.costc{background:#11284a!important}
+.costc h3{background:#22d3ee!important;color:#04202e!important;border:0}
+.costc tr:hover td{background:#16335d}.costc td.r{color:#fff!important}.costc td.r .cv{color:#a9bbd6!important}
+.costc tr.tot td{background:#fbbf24!important;color:#2b1d00!important;border-top:0}.costc tr.tot td.r .cv{color:#4a3300!important}
+input[type=number]{background:#0a1a33;border:1px solid #2f5b98}
+.t{background:#22d3ee}.d{background:#fbbf24}
+.donut div{background:#0a1a33}
+.lg{background:color-mix(in srgb,var(--c) 14%,#11284a);border:1px solid #244c82;border-left:8px solid var(--c)}
+.lg:hover{background:color-mix(in srgb,var(--c) 28%,#11284a)}
+.lg b{color:var(--c)}.lg .lt{color:#fff}.lg .ls{color:#a9bbd6}
+.good{color:#4ade80}.bad{color:#fb7185}
+#zoom{background:#071326;border:2px solid #22d3ee}#zoom .zh{background:#22d3ee;color:#04202e;font-weight:800}
+.leaflet-tooltip{background:#071326;border:1px solid #22d3ee}
+::-webkit-scrollbar-track{background:#071326}::-webkit-scrollbar-thumb{background:#2f5b98!important;border-color:#071326}::-webkit-scrollbar-thumb:hover{background:#22d3ee!important}
+/* toned-down banner and time tag */
+/* emphasis: key info bigger and brighter */
+/* ===== Day page: timeline layout ===== */
+.hot{display:flex!important;flex-wrap:wrap;gap:20px!important;width:100%}
+.hc{flex:1 1 300px;min-width:0;max-width:none}
+.hc .th{height:calc(240px*var(--s))!important}
+#legend{gap:10px}
+#legend .lr{background:color-mix(in srgb,var(--c) 14%,#11284a);border:1px solid color-mix(in srgb,var(--c) 45%,#244c82);border-left:8px solid var(--c);border-radius:12px;padding:8px 18px 8px 14px;box-shadow:0 4px 14px #0006}
+#legend .lr:hover{background:color-mix(in srgb,var(--c) 30%,#11284a);padding-left:20px;box-shadow:0 8px 22px #000a}
+#legend .ld{background:var(--c);color:#06182c!important;width:calc(58px*var(--s));height:calc(58px*var(--s));border-radius:50%;display:grid;place-items:center;font-size:calc(32px*var(--s))!important;font-weight:900!important;flex:none;box-shadow:0 0 0 4px #06182c,0 0 0 6px var(--c)}
+#legend .lt{font-size:calc(28px*var(--s))!important;font-weight:800!important;color:#fff!important}
+#legend .ls{font-size:calc(19px*var(--s))!important;color:color-mix(in srgb,var(--c) 55%,#fff)!important;font-weight:600}
+#legend .la{color:var(--c)!important;font-size:calc(44px*var(--s));font-weight:300}
+.hc .gr{color:#ffd24d!important;font-weight:700;font-size:calc(18px*var(--s))!important}
+.hc .hp b{white-space:normal}.hc .hp b .cv{display:block;margin:2px 0 0;font-size:calc(16px*var(--s))}
+.hc .hs .cv{display:block;margin:0;font-size:calc(15px*var(--s))}
+.slide.fit .banner{align-items:center!important;display:flex!important}
+.banner .ghost{align-self:center!important;line-height:1!important;margin:0 36px 0 0!important;min-width:calc(90px*var(--s));text-align:center}
+.banner .bl{align-self:center;align-items:center!important}
+.banner .bl>div{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.banner .bt{display:flex;align-items:center;gap:22px;margin:0 0 4px!important}
+.banner .pill{line-height:1.2;margin:0!important}.banner .dots{align-items:center}
+.banner h2{line-height:1.1!important;margin:10px 0!important;padding:0!important}
+.banner .rt{display:flex;align-items:center;gap:8px;margin:0!important}
+.banner .dc{align-self:center!important;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;margin:0!important}
+.banner .dc .n{line-height:1.1}.banner .dc .l{order:-1;margin-bottom:4px}
+.hot{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))!important;gap:20px!important;margin:6px 0 10px}
+.hc{padding:14px!important;border-radius:14px!important;display:flex;flex-direction:column;gap:6px}
+.hc .th{width:100%!important;height:calc(210px*var(--s))!important;margin:0 0 6px!important;border-radius:10px;border:1px solid #244c82}
+.th[data-area]::after{content:attr(data-area);position:absolute;left:10px;bottom:10px;background:#000b;color:#fff;font-size:13px;padding:2px 10px;border-radius:6px;pointer-events:none}
+.hc .hn{font-size:calc(23px*var(--s));font-weight:800;color:#fff;line-height:1.2}
+.hc .hp{font-size:calc(19px*var(--s));color:#a9bbd6}.hc .hp b{font-size:calc(28px*var(--s));color:#ffd24d}
+.hc .hs{font-size:calc(19px*var(--s));color:#e2ecff;margin-top:2px}
+.hc a{font-size:calc(16px*var(--s))!important;margin-top:4px}
+.slide.fit .banner{padding:14px 0 30px!important;margin-bottom:26px!important;gap:32px}
+.banner .bl{gap:0}.banner h2{margin:14px 0 12px!important}.banner .bt{gap:22px;margin-bottom:4px}.banner .rt{margin-top:10px!important;line-height:1.5}
+.banner .ghost{margin-right:36px!important}.banner .dc{padding:6px 0 6px 36px!important}
+#nav{padding-left:20px;gap:6px}#nav button{padding:10px 16px}
+.it{grid-template-columns:calc(140px*var(--s)) 1fr calc(250px*var(--s))!important}
+.it .nbs{order:0;display:flex!important;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:8px;border:0!important;padding:0!important;margin-bottom:8px;min-width:0}
+.it .nbs .nb{width:calc(38px*var(--s));height:calc(38px*var(--s));font-size:calc(22px*var(--s))}
+.it::before{left:calc(158px*var(--s))!important}.it::after{left:calc(158px*var(--s) - 4px)!important}
+.it .tt{color:var(--c0)!important}
+.banner{background:none!important;border:0!important;border-bottom:2px solid #244c82!important;box-shadow:none!important;border-radius:0!important;padding:0 0 12px!important;align-items:flex-end}
+.banner .ghost{position:static!important;opacity:1!important;font-size:calc(120px*var(--s))!important;line-height:.85;font-weight:800;color:var(--c)!important;pointer-events:auto;margin-right:22px}
+.banner .bl{flex:1;min-width:0}.banner .ic{display:none!important}
+.banner .pill{background:none!important;border:0!important;padding:0!important;color:var(--c)!important;letter-spacing:.12em}
+.banner .km{background:none!important;color:#a9bbd6!important;padding:0;margin-left:10px}
+.banner .dc{background:none!important;border:0!important;border-left:2px solid #244c82!important;border-radius:0;text-align:left;padding:0 0 0 22px}
+.col-scroll{padding-right:14px}
+.it{position:relative;display:grid!important;grid-template-columns:calc(140px*var(--s)) 1fr calc(250px*var(--s)) auto;align-items:center;gap:0;background:transparent!important;border:0!important;border-bottom:1px solid #1b3a66!important;border-radius:0!important;box-shadow:none!important;padding:18px 0!important;margin:0!important;transform:none!important}
+.it::before{content:"";position:absolute;left:calc(158px*var(--s));top:0;bottom:0;width:2px;background:#244c82}
+.it::after{content:"";position:absolute;left:calc(158px*var(--s) - 8px);top:50%;margin-top:-9px;width:18px;height:18px;border-radius:50%;background:var(--c0);border:4px solid #0a1a33;box-sizing:content-box;width:10px;height:10px}
+.it:first-child::before{top:50%}.it:last-of-type::before{bottom:50%}
+.it:hover{background:#0f2342!important}.it.hl{background:#17325a!important;box-shadow:inset 4px 0 0 #fbbf24!important;border-color:#1b3a66!important}
+.it .tm{display:flex;flex-direction:column;align-items:flex-end;padding:0 !important;border:0!important;background:none!important;color:#fff!important}
+.it .tm b{font-size:calc(26px*var(--s));font-weight:800;color:#fff}
+.it .tm small{font-size:calc(13px*var(--s));color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.it .bd{padding:0 24px 0 calc(40px*var(--s));min-width:0}
+.it .th{width:100%!important;height:calc(150px*var(--s))!important;border-radius:10px;border:1px solid #244c82;transform:none!important}
+.it .nbs{border-left:0;padding-left:16px;min-width:0}
+.card.costc{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0;padding:0}
+.card.costc:hover{transform:none;box-shadow:none}
+.card.costc h3{background:none!important;color:#fbbf24!important;border-bottom:2px solid #fbbf24!important;padding:4px 0!important;margin:0 0 4px!important}
+.card.costc td{padding:5px 4px!important;border-bottom:1px dashed #244c82}
+.card.costc tr.tot td{background:none!important;color:#fbbf24!important;border-top:2px solid #fbbf24;border-bottom:0}
+.card.costc tr:hover td{background:#0f2342}
+@media(max-width:1100px){.it{grid-template-columns:90px 1fr;}.it .th,.it .nbs{display:none}.it::before,.it::after{display:none}}
+/* headers: larger */
+h2{font-size:calc(62px*var(--s))!important;line-height:1.1}
+h3,.card h3{font-size:calc(32px*var(--s))!important;font-weight:800;letter-spacing:.02em}
+.banner h2,.slide.fit .banner h2{font-size:calc(62px*var(--s))!important}
+.banner .rt{font-size:calc(22px*var(--s))!important}
+.banner .pill{font-size:calc(22px*var(--s))!important}
+.costc h3{font-size:calc(28px*var(--s))!important}
+#legend h3{font-size:calc(32px*var(--s))!important}
+.sub{font-size:calc(22px*var(--s))}
+.hero2 h1{font-size:calc(96px*var(--s))}
+.hero2 .pill{font-size:calc(20px*var(--s))!important}
+.banner h2,.slide.fit .banner h2{font-weight:800;letter-spacing:-.5px}
+.banner .pill{padding:5px 16px;font-weight:800}
+.banner .dc .n{font-size:calc(44px*var(--s))!important;font-weight:800;color:#ffd24d}
+.banner .dc{padding:10px 24px;border-color:#ffd24d}
+.it .bd .tm{font-size:calc(22px*var(--s))!important;font-weight:800;color:#fff!important;border-bottom:3px solid var(--c0);display:inline-block;padding-bottom:1px;letter-spacing:.04em}
+.it .tt{font-size:calc(29px*var(--s))!important;font-weight:700;color:#fff}
+.it p,.card .it p{font-size:calc(19px*var(--s))!important}
+.nb{width:calc(52px*var(--s));height:calc(52px*var(--s));font-size:calc(28px*var(--s));box-shadow:0 0 0 4px #06182c,0 0 18px var(--c)}
+.costc td.r{font-size:calc(26px*var(--s))!important;font-weight:800;color:#fff!important}
+.costc td.r .cv{font-size:calc(17px*var(--s))!important;font-weight:500}
+.costc td:nth-child(2){font-size:calc(21px*var(--s))!important;font-weight:600}
+.costc tr.tot td{font-size:calc(30px*var(--s))!important;font-weight:900;padding:10px 14px}
+.costc h3{font-weight:800}
+.big{font-size:calc(68px*var(--s))!important;font-weight:800;text-shadow:0 0 24px currentColor}
+.stat .n{font-weight:800}
+.strip .sn{font-weight:700;color:#ffd24d;text-shadow:0 0 20px #ffd24d66}
+#legend .lt{font-weight:700;color:#fff}#legend .ld{font-weight:800;font-size:calc(48px*var(--s))}
+h2{letter-spacing:-.5px}
+.hero2 h1{font-weight:800}
+.good,.bad{font-weight:800}
+.strip{display:flex;border-top:1px solid #244c82;border-bottom:1px solid #244c82;margin-bottom:16px}
+.strip>div{flex:1;display:flex;align-items:baseline;gap:14px;padding:10px 22px;border-left:1px solid #244c82}.strip>div:first-child{border-left:0;padding-left:4px}
+.strip .sn{font-size:calc(60px*var(--s));font-weight:300;color:#fff;font-variant-numeric:tabular-nums;line-height:1}
+.strip span{font-size:calc(22px*var(--s));color:#a9bbd6}
+#legend{display:flex;flex-direction:column;overflow:auto}
+#legend h3{font-size:calc(24px*var(--s))!important}
+#legend .lr{flex:1;min-height:60px;display:flex;align-items:center;gap:18px;padding:6px 8px;border-bottom:1px solid #244c82;cursor:pointer;transition:.15s}
+#legend .lr:hover{background:#11284a;padding-left:16px}
+#legend .ld{font-size:calc(40px*var(--s));font-weight:300;color:var(--c);width:44px;text-align:center}
+#legend .lt{font-size:calc(24px*var(--s))!important;color:#f1f5ff;font-weight:500}
+#legend .ls{font-size:calc(18px*var(--s))!important;color:#a9bbd6}
+#legend .la{margin-left:auto;font-size:calc(34px*var(--s));color:#33557f}#legend .lr:hover .la{color:var(--c)}
+.banner{background:#11284a!important;border:1px solid #244c82;border-left:8px solid var(--c);color:var(--text);box-shadow:0 4px 18px #0006}
+.banner .ghost{color:var(--c)!important;opacity:.09}
+.banner h2,.slide.fit .banner h2{color:#f1f5ff!important;-webkit-text-fill-color:#f1f5ff!important}
+.banner .rt{color:#a9bbd6}.banner .km{background:#16335d;color:#cfe0f7}
+.banner .ic{background:#16335d;border:1px solid #244c82}
+.banner .pill{background:color-mix(in srgb,var(--c) 22%,#11284a)!important;color:var(--c)!important;border:1px solid color-mix(in srgb,var(--c) 55%,transparent)}
+.banner .dc{background:#0a1a33;border:1px solid #244c82}.banner .dc .n{color:#fbbf24}.banner .dc .l{color:#a9bbd6}
+.dots i{background:#33557f}.dots i:hover{background:#a9bbd6}.dots i.cur{background:var(--c)}
+.it .tm{background:none;color:var(--c0)!important;padding:0;border-radius:0;font-weight:600;letter-spacing:.06em}
+/* final overrides (kept last so they win) */
+.hc .hp b small.cv{display:inline!important;margin:0 0 0 16px!important;font-size:calc(20px*var(--s))!important;font-weight:700!important;color:#e2ecff!important;white-space:nowrap}
+.hc .hp b{white-space:normal;font-size:calc(24px*var(--s));font-weight:800;color:#ffd24d}
+.hc .hp .sp{color:#5f7aa3;margin:0 12px;font-weight:400}
+.strip>div:nth-child(1) span{color:#22d3ee!important}.strip>div:nth-child(2) span{color:#fbbf24!important}
+.strip>div:nth-child(3) span{color:#c084fc!important}.strip>div:nth-child(4) span{color:#34d399!important}
+.strip>div span{font-weight:700}
+#legend .lr .ls{color:var(--c)!important;font-weight:600!important}
+.hc .hr{display:inline-flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.hc .rv{color:#ffd24d;font-weight:800;font-size:calc(24px*var(--s));cursor:pointer}
+.hc .hr .gr{font-size:calc(16px*var(--s))!important;color:#8ab4f8!important;cursor:pointer;font-weight:600}
+.card.costc td.a{white-space:nowrap;font-variant-numeric:tabular-nums;width:1%}
+.card.costc td.r.g{font-size:calc(22px*var(--s))!important;font-weight:800;color:#fff!important}
+.card.costc td.r.c{font-size:calc(20px*var(--s))!important;font-weight:600;color:#d5e3f8!important;padding-left:18px!important}
+.card.costc tr.tot td.r.g{color:#ffd24d!important;font-size:calc(26px*var(--s))!important}
+.card.costc tr.tot td.r.c{color:#fff1c2!important;font-size:calc(22px*var(--s))!important}
+.card.costc th.r{text-align:right;padding-left:18px!important}
+.banner .dc .n .cv{display:block;margin:4px 0 0!important;font-size:calc(24px*var(--s))!important;font-weight:700;color:#e2ecff}
+.hc .hn{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 16px}
+.hc .hn .gr{font-size:calc(17px*var(--s))!important;margin:0!important;white-space:nowrap}
+.card.costc td.r .cv{font-size:calc(20px*var(--s))!important;color:#d5e3f8!important;font-weight:600;margin-left:22px!important}
+.card.costc td.r{font-size:calc(22px*var(--s))!important}
+.card.costc tr.tot td,.card.costc tr.tot td.r{color:#ffd24d!important;font-size:calc(26px*var(--s))!important;background:#1a2f52!important}
+.card.costc tr.tot td.r .cv{font-size:calc(22px*var(--s))!important;color:#fff1c2!important;margin-left:22px!important}
+.daybody{grid-template-rows:minmax(0,1fr)!important}
+.hotwrap{width:100%;padding-top:14px;flex:none}
+.hotwrap h3{margin:0 0 10px!important}.hotwrap .note{margin:8px 0 0!important}
+.hc{display:flex!important;flex-direction:column;gap:6px;align-items:stretch}
+.hc .th{height:calc(240px*var(--s))!important;width:100%!important;margin:0 0 6px!important;grid-row:auto}
+.hc>*:not(.th){grid-column:auto}
+.hot{display:flex!important;flex-wrap:wrap!important;gap:20px!important;width:100%}
+.hc{flex:1 1 300px!important;min-width:0;max-width:none!important}
+.strip .sn{color:#fff!important;text-shadow:none!important;font-weight:700!important}
+.strip span{color:#a9bbd6}
+#legend .lr{background:transparent!important;border:0!important;border-bottom:1px solid #1b3a66!important;border-radius:0!important;box-shadow:none!important;padding:10px 6px!important}
+#legend .lr:hover{background:#0f2342!important;padding-left:14px!important;box-shadow:none!important}
+#legend .ld{background:none!important;box-shadow:none!important;border-radius:0!important;width:calc(76px*var(--s))!important;height:auto!important;color:var(--c)!important;font-size:calc(56px*var(--s))!important;font-weight:800!important;line-height:1}
+#legend .lt{font-size:calc(28px*var(--s))!important;font-weight:700!important;color:#fff!important}
+#legend .ls{font-size:calc(19px*var(--s))!important;color:#a9bbd6!important;font-weight:400!important}
+#legend .la{color:#33557f!important;font-size:calc(40px*var(--s))}#legend .lr:hover .la{color:var(--c)!important}
+/* page 2 colours (last) */
+/* cost comparison + summary */
+.pk{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:6px 0 22px;padding:14px 0;border-top:1px solid #244c82;border-bottom:1px solid #244c82}
+.pk label{font-size:calc(22px*var(--s));color:#a9bbd6;font-weight:600}
+.pkin{font-size:calc(30px*var(--s));font-weight:800;color:#ffd24d;display:inline-flex;align-items:center;gap:8px}
+.pkin input{width:calc(150px*var(--s))!important;font-size:calc(30px*var(--s))!important;font-weight:800;text-align:right;color:#ffd24d!important;background:#0a1a33!important;border:2px solid #33557f!important;border-radius:8px;padding:4px 10px}
+#pkcv{font-size:calc(22px*var(--s));color:#d5e3f8}
+.sb{display:grid;grid-template-columns:calc(80px*var(--s)) 1fr calc(270px*var(--s));align-items:center;gap:18px;margin:10px 0}
+.sbn{font-size:calc(26px*var(--s));font-weight:800;color:#fff}
+.sbt{display:flex;height:calc(56px*var(--s));background:#0f2342;border-radius:8px;overflow:hidden}
+.sbt i{display:flex;align-items:center;justify-content:center;overflow:hidden;min-width:2px}
+.sbt em{font-style:normal;font-size:calc(16px*var(--s));font-weight:700;color:#06182c;white-space:nowrap}
+.sbv{text-align:right}
+.mp{display:block;font-size:calc(26px*var(--s));font-weight:800;color:#fff;line-height:1.15}
+.ms{display:block;font-size:calc(17px*var(--s));color:#a9bbd6;font-weight:500;white-space:nowrap}
+.lgd{display:flex;gap:22px;flex-wrap:wrap;margin:8px 0 20px;font-size:calc(17px*var(--s));color:#a9bbd6}
+.lgd i{display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:8px;vertical-align:-1px}
+.ct{width:100%;border-collapse:collapse;margin-top:8px}
+.ct th{font-size:calc(16px*var(--s))!important;text-transform:uppercase;letter-spacing:.08em;color:#a9bbd6;padding:8px 12px}
+.ct td{padding:10px 12px;font-size:calc(20px*var(--s));border-bottom:1px solid #1b3a66;vertical-align:middle}
+.ct td:first-child{font-weight:600;color:#fff;font-size:calc(21px*var(--s))}
+.ct tr.tt td{border-top:2px solid #ffd24d;border-bottom:0;background:#11284a}
+.ct td.good .mp{color:#4ade80}.ct td.bad .mp{color:#fb7185}
+.vd{font-size:calc(46px*var(--s));font-weight:800;line-height:1.1;display:flex;flex-direction:column;gap:8px;margin:8px 0 26px}
+.vd .mp{display:inline;font-size:inherit;color:inherit}.vd .ms{display:inline;font-size:calc(24px*var(--s));margin-left:14px;color:#a9bbd6}
+.vd>span{font-size:calc(24px*var(--s));color:#a9bbd6;font-weight:500}
+.vd.good{color:#4ade80}.vd.bad{color:#fb7185}
+.sx{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #244c82;border-bottom:1px solid #244c82;margin-bottom:26px}
+.sx>div{padding:16px 24px}.sx>div+div{border-left:1px solid #244c82}
+.sx label{display:block;font-size:calc(18px*var(--s));text-transform:uppercase;letter-spacing:.08em;color:#a9bbd6;margin-bottom:6px}
+.sx .mp{font-size:calc(40px*var(--s))}.sx .ms{font-size:calc(20px*var(--s))}
+.ms2{display:block;margin-top:8px;font-size:calc(16px*var(--s));color:#7f95b8}
+.sl{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.sl h3{margin:0 0 10px}.sl ul{margin:0;padding-left:22px;font-size:calc(20px*var(--s));line-height:1.7;color:#d5e3f8}
+.sl li .mp{display:inline;font-size:inherit}.sl li .ms{display:inline;font-size:calc(16px*var(--s));margin-left:8px}
+.sx+.sl+.note,#summary .note{margin-top:22px}
+.scrollhint{position:sticky;bottom:0;flex:none;text-align:center;padding:6px 12px;margin-top:6px;font-weight:600;font-size:calc(15px*var(--s));letter-spacing:.06em;color:#a9bbd6;background:#0a1a33cc;border-radius:10px;box-shadow:0 -10px 14px #0a1a33;z-index:5}
+.scrollhint:not(.end){animation:none}
+.scrollhint.end{background:transparent;color:#5f7aa3;box-shadow:none;font-weight:500}
+.slide.fit>*{min-width:0}
+.slide.fit .banner{box-sizing:border-box;max-width:100%;padding-right:56px!important}
+.banner .dc{margin-right:40px!important;padding-right:0!important}
+.banner .dc .n .cv{font-size:calc(20px*var(--s))!important}
+.hc .rs{color:#a9bbd6;font-size:calc(16px*var(--s));font-weight:600}
+.banner{overflow:visible!important}
+.banner .dc{flex:none!important;max-width:none;padding:6px 8px 6px 28px!important;white-space:nowrap}
+.banner .dc .n{white-space:nowrap}
+.banner .dc .n .cv{white-space:nowrap;font-size:calc(21px*var(--s))!important}
+.banner .bl{min-width:0;flex:1 1 auto}
+.slide .strip>div:nth-child(1) .sn,.slide .strip>div:nth-child(1) span{color:#22d3ee!important}
+.slide .strip>div:nth-child(2) .sn,.slide .strip>div:nth-child(2) span{color:#fbbf24!important}
+.slide .strip>div:nth-child(3) .sn,.slide .strip>div:nth-child(3) span{color:#c084fc!important}
+.slide .strip>div:nth-child(4) .sn,.slide .strip>div:nth-child(4) span{color:#34d399!important}
+.slide .strip>div span{font-weight:700!important}
+#legend .lr .lt{color:#fff!important}#legend .lr .ls{color:var(--c)!important;font-weight:700!important}
+#legend h3{color:#fbbf24!important}
+</style>
+</head>
+<body>
+<div id="nav"></div>
+<div id="deck"></div>
+<div id="bar"></div>
+<div id="foot"><button id="prev">&larr; Prev</button><span id="cnt" style="color:var(--mut)"></span><button id="next">Next &rarr;</button></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* All GBP, per person, twin share. Costs are approximate 2025 public prices - verify before booking. */
+const COL=['#38bdf8','#a78bfa','#f472b6','#f59e0b','#34d399','#fb7185','#facc15'];
+const WK=[[null,'St_Pancras_railway_station','Big_Ben','Chinatown,_London','British_Museum',null,'Heathrow_Airport'],
+[null,'Cambridge',"King's_College_Chapel,_Cambridge",null,'York','York_Minster',null,'Darlington'],
+[null,'Edinburgh',null,'Edinburgh_Castle','Royal_Mile','Glasgow',null,'Glasgow_Airport'],
+[null,'Glasgow','Gretna_Green',null,'Windermere','Manchester','Old_Trafford_(stadium)',null,'Manchester'],
+[null,'Stratford-upon-Avon',null,"Shakespeare's_Birthplace",'Bicester_Village_Shopping_Centre','Blenheim_Palace',null,'Swindon'],
+[null,'Bibury','Roman_Baths_(Bath)',null,null,'Swindon'],
+[null,null,'Stonehenge',null,null,'Windsor_Castle',null,'St_Pancras_railway_station']];
+const tIcon=t=>t[2]?'\ud83c\udf7d\ufe0f':/Drive|Depart|Transfer|Return|Drop-off/i.test(t[1])?'\ud83d\ude8c':/hotel/i.test(t[1])?'\ud83c\udfe8':'\ud83d\udccd';
+const DESC=[
+['Start the day with a bite near your hotel or station; breakfast is not included on Day 1.','Gather in front of the Starbucks in the St Pancras station hall. Arrive 10 minutes early: late arrivals are not refunded.','A guided 1-hour walk past Big Ben, the Houses of Parliament, Westminster Abbey, 10 Downing Street and Buckingham Palace. Wear comfortable shoes.','Chinatown has many affordable restaurants around Gerrard Street; the guide will suggest options.','Free entry to one of the world\'s great museums: the Rosetta Stone, Egyptian mummies and the Parthenon sculptures. Then St Paul\'s Cathedral, Tower Bridge and the Tower of London.','Free choice of dinner; the guide can recommend places near the hotel.','The coach takes you to a 3-4 star hotel near Heathrow for the night.'],
+['Continental breakfast at the hotel (about £5 per person, included).','Early start toward the university city of Cambridge (about 1.5 hours).','Walk past King\'s College Chapel, Queens\' College and the Bridge of Sighs, or punt along the River Cam (extra cost).','A relaxed lunch in Cambridge town centre, own expense.','A long 4-hour drive north to the historic city of York.','Visit York Minster, one of Europe\'s largest Gothic cathedrals, then walk the Roman walls and the medieval Shambles.','Dinner at your own expense in York.','About an hour to your hotel near Darlington.'],
+['Hotel breakfast, included.','Drive north across the border into Scotland (about 4 hours).','Pick up lunch on the Royal Mile or in the Old Town.','Edinburgh Castle sits on an extinct volcano and holds the Scottish Crown Jewels. Continue along the Royal Mile to Holyrood.','Free time: wander Princes Street Gardens, have coffee at The Elephant House, or join the optional afternoon tea (about £40).','About 1.5 hours west to Scotland\'s largest city, Glasgow.','Dinner in Glasgow at your own expense.','Overnight at a hotel near Glasgow Airport or Strathclyde Park.'],
+['Hotel breakfast, included.','Head south toward the Lake District, with a first stop at the Scottish border.','Gretna Green was the "runaway wedding" town; couples have married here since 1754. A short 30-minute visit.','Lunch near the lake, own expense.','England\'s largest lake: a lakeside stroll, with optional boat cruise or Peter Rabbit museum (extra cost).','Drive on to the lively city of Manchester.','A 30-minute photo stop outside the home of Manchester United, known as the Theatre of Dreams.','Free time for dinner in Manchester.','Transfer to the hotel in or near the city centre.'],
+['Hotel breakfast, included.','A 3-hour drive south to Stratford-upon-Avon.','Quick lunch in the town, own expense.','The half-timbered house where William Shakespeare was born in 1564. Streets, theatres and pubs are all named after him.','Discount outlet village with 130+ brands. Prices can be around 40% off retail.','Optional add-ons: Oxford city tour (about £30) or Blenheim Palace (about £55), if the group is big enough.','Dinner at your own expense.','Drive to Swindon for the night.'],
+['Hotel breakfast, included.','Head into the Cotswolds toward the village of Bibury.','Arlington Row in Bibury, then the Roman Baths, Royal Crescent and Jane Austen Centre in Bath. Entry fees are extra.','Lunch in Bath, own expense. Afternoon tea by the River Avon is a classic.','Dinner at your own expense.','Return to the Swindon hotel.'],
+['Hotel breakfast, included.','Set off early for Salisbury Plain.','The prehistoric stone circle and UNESCO World Heritage Site, viewed from the outside for about 45 minutes.','Lunch on the road, own expense.','Drive east to Windsor (about 2 hours).','The oldest continuously occupied castle in the world and an official royal residence. About 1 hour, exterior view.','Final drive into London.','Tour ends at St Pancras Station at about 19:30, ready for onward Eurostar travel.']];
+async function loadOne(im){if(im.getAttribute('src')||im.dataset.busy)return;im.dataset.busy=1;let u=null,link=null;
+ if(im.dataset.src){im.referrerPolicy='no-referrer';im.dataset.big=im.dataset.src;im.onload=()=>{im.classList.add('ok');im.parentNode.dataset.area='Photo: Expedia'};im.onerror=()=>{im.removeAttribute('src');im.dataset.src='';im.dataset.nogal='';delete im.dataset.busy;loadOne(im)};im.src=im.dataset.src;return}
+ const J=async url=>{const r=await fetch(url);if(!r.ok)throw new Error(r.status);return r.json()};
+ try{if(im.dataset.wk){const j=await J('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(im.dataset.wk));u=j.thumbnail&&j.thumbnail.source;link=j.content_urls&&j.content_urls.desktop.page}}catch(e){console.warn('wiki',im.dataset.wk,e)}
+ try{if(!u&&!im.dataset.fb){const q=im.dataset.q||(im.dataset.wk||'').replace(/_/g,' ');const j=await J('https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrlimit=5&gsrsearch='+encodeURIComponent(q)+'&prop=imageinfo&iiprop=url&iiurlwidth=500&format=json&origin=*');const p=Object.values((j.query||{}).pages||{}).sort((a,b)=>a.index-b.index).find(x=>x.imageinfo&&/\.(jpe?g|png)$/i.test(x.imageinfo[0].url));if(p){u=p.imageinfo[0].thumburl;link=p.imageinfo[0].descriptionurl}}}catch(e){console.warn('commons',e)}
+ if(!u&&im.dataset.fb){try{const j=await J('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(im.dataset.fb));u=j.thumbnail&&j.thumbnail.source;link=j.content_urls&&j.content_urls.desktop.page;if(u){im.dataset.wk=im.dataset.fb;im.parentNode.dataset.area='Area photo, not the hotel'}}catch(e){}}
+ if(!u){im.parentNode.title='No photo found';return}
+ u=u.split('?')[0];im.dataset.big=u.replace(/\/(\d+)px-/,'/960px-');FB[im.dataset.big]=u;im.referrerPolicy='no-referrer';im.onload=()=>im.classList.add('ok');im.onerror=()=>{im.parentNode.title='Photo failed to load'};im.src=u;if(link)im.onclick=()=>window.open(link,'_blank')}
+function loadPhotos(sl){sl.querySelectorAll('img[data-wk],img[data-q],img[data-src],img[data-fb]').forEach(loadOne)}
+const Z=document.createElement('div');Z.id='zoom';Z.innerHTML='<img><div class="zc"></div><div class="zh"></div>';document.addEventListener('DOMContentLoaded',()=>document.body.appendChild(Z));
+const zs={im:null,list:[],idx:0},GC={},FB={};
+function zshow(){const zi=Z.querySelector('img'),u=zs.list[zs.idx];zi.onerror=()=>{zi.onerror=null;if(FB[u]){zs.list[zs.idx]=FB[u];zshow()}else if(zs.list.length>1){zs.list.splice(zs.idx,1);zs.idx%=zs.list.length;zshow()}};zi.src=u;Z.querySelector('.zc').textContent=zs.im.alt;Z.querySelector('.zh').textContent=zs.list.length>1?`◀ press ← / → ▶   ${zs.idx+1} / ${zs.list.length}`:(zs.done?'No more photos found':'Loading more photos…');[1,-1].forEach(d=>{const n=zs.list[(zs.idx+d+zs.list.length)%zs.list.length];if(n)new Image().src=n})}
+function getGal(im){const raw=im.dataset.wk?im.dataset.wk.replace(/_/g,' ').replace(/\s*\(.*?\)/,''):im.dataset.q;if(!GC[raw])GC[raw]=fetch('https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrlimit=20&gsrsearch='+encodeURIComponent(raw+' filetype:bitmap')+'&prop=imageinfo&iiprop=url|size&iiurlwidth=1280&format=json&origin=*').then(r=>r.json()).then(j=>Object.values((j.query||{}).pages||{}).sort((a,b)=>a.index-b.index).filter(p=>p.imageinfo&&/\.jpe?g$/i.test(p.imageinfo[0].url)&&p.imageinfo[0].width>=900&&!/map|logo|flag|coat/i.test(p.title)).map(p=>p.imageinfo[0].thumburl)).catch(()=>[]);return GC[raw]}
+window.addEventListener('keydown',e=>{if(Z.style.display!=='block'||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;e.preventDefault();e.stopImmediatePropagation();const n=zs.list.length;if(n>1){zs.idx=(zs.idx+(e.key==='ArrowRight'?1:-1)+n)%n;zshow()}},true);
+const GC2={};
+function getGal2(im){if(im.dataset.nogal)return Promise.resolve([]);const key=im.dataset.wk||im.dataset.q;if(!GC2[key])GC2[key]=(async()=>{let out=[];const bn=u=>u.split('/').pop().replace(/^\d+px-/,'');
+ if(im.dataset.wk){try{const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/media-list/'+encodeURIComponent(im.dataset.wk));const j=await r.json();for(const it of j.items||[]){if(it.type!=='image'||!it.srcset||!it.srcset.length)continue;let s=it.srcset[it.srcset.length-1].src;if(s.startsWith('//'))s='https:'+s;if(/\.svg|logo|flag|coat|icon|map|symbol|blank/i.test(s))continue;const big=s.replace(/\/(\d+)px-/,'/960px-');FB[big]=s;out.push(big)}}catch(e){console.warn('media-list',e)}}
+ try{const g=await getGal(im);out=out.concat(g)}catch(e){}
+ const seen=new Set();return out.filter(u=>{const k=bn(u);if(seen.has(k))return false;seen.add(k);return true})})();return GC2[key]}
+function zpos(e){if(Z.style.display!=='block')return;const w=Z.offsetWidth,h=Z.offsetHeight;let x=e.clientX+26,y=e.clientY+20;if(x+w>innerWidth-8)x=e.clientX-w-26;if(x<8)x=8;if(y+h>innerHeight-8)y=innerHeight-h-8;if(y<8)y=8;Z.style.left=x+'px';Z.style.top=y+'px'}
+document.addEventListener('mousemove',zpos);
+document.addEventListener('mouseover',e=>{const c=e.target.closest&&e.target.closest('.it,.hc');const im=c&&c.querySelector('.ph.ok');if(!im){Z.style.display='none';zs.im=null;return}if(zs.im===im){zpos(e);return}zs.im=im;zs.done=false;zs.list=[im.dataset.big||im.src];zs.idx=0;Z.style.display='block';zshow();zpos(e);getGal2(im).then(g=>{if(zs.im!==im)return;const first=zs.list[0],bn=u=>u.split('/').pop().replace(/^\d+px-/,'');zs.done=true;zs.list=[first,...g.filter(u=>bn(u)!==bn(first))];zshow()})});
+
+const ICON=['🏛️','🎓','🏰','⚽','🎭','🏞️','🗿'];
+const DAYS=[
+{d:1,dow:'Saturday',title:'London CityWalk',route:'St Pancras → Westminster → British Museum → Tower of London',km:100,
+ hotel:'Atrium Hotel Heathrow / Hyatt Place Heathrow / Renaissance Heathrow',
+ stops:[['St Pancras (Meeting point)',51.5322,-0.1263,'09:00 start'],['Westminster / Big Ben',51.5007,-0.1246,'Parliament, Abbey'],['Buckingham Palace',51.5014,-0.1419,'Royal residence'],['British Museum',51.5194,-0.1270,'Free entry'],["St Paul's Cathedral",51.5138,-0.0984,''],['Tower of London',51.5081,-0.0759,'+ Tower Bridge'],['Heathrow Hotel',51.4800,-0.4400,'Overnight']],
+ tl:[['07:00','Breakfast (own expense)',1],['09:00','Meet at St Pancras, in front of Starbucks'],['09:30','1-hr Chinese-guided CityWalk: Big Ben, Parliament, Westminster Abbey, Downing St, Buckingham Palace'],['12:00','Lunch in Chinatown (own expense)',1],['14:00','British Museum, St Paul\'s, Tower Bridge, Tower of London'],['18:00','Dinner (own expense)',1],['19:00','Drop-off at Heathrow hotel']],
+ items:[['Hotel','Heathrow 3-4★ (half twin room)',75,0,1],['Transport','London Tube day travelcard',9,0,1],['Meals','Breakfast',9,9,1],['Meals','Lunch (Chinatown)',13,13,1],['Meals','Dinner',22,22,1],['Entry','British Museum',0,0,1],["Entry","St Paul's Cathedral",25,25,0],['Entry','Tower of London',36,36,0],['Entry','Tower Bridge Exhibition',12,12,0],['Entry','Westminster Abbey',30,30,0]]},
+{d:2,dow:'Sunday',title:'Cambridge & Medieval York',route:'Heathrow → Cambridge (103 km) → York (254 km) → Darlington',km:377,
+ hotel:'Holiday Inn Darlington A1M / Scotch Corner / Redworth Hall',
+ stops:[['Heathrow Hotel',51.4800,-0.4400,'Start'],['Cambridge – King\'s College',52.2043,0.1166,'Punting on the Cam'],['Queens\' College',52.2022,0.1155,'Mathematical Bridge'],['York Minster',53.9622,-1.0819,'~1000 yrs old'],['The Shambles',53.9591,-1.0815,'Medieval street'],['Darlington Hotel',54.5230,-1.5530,'Overnight']],
+ tl:[['07:00','Hotel continental breakfast (£5)'],['09:30','Depart for Cambridge'],['11:00','King\'s College, Queens\', punting on River Cam (1.5 h)'],['12:00','Lunch (own expense)',1],['13:00','Drive to York (4 h)'],['17:00','York Minster, City Walls, Shambles'],['18:00','Dinner (own expense)',1],['19:00','Transfer to Darlington hotel (1 h)']],
+ items:[['Hotel','Darlington 3-4★ (half twin room)',53,0,1],['Transport','Car hire share + fuel (377 km)',50,0,1],['Meals','Breakfast',9,0,1],['Meals','Lunch',12,12,1],['Meals','Dinner',20,20,1],['Entry','King\'s College Chapel',14,14,1],['Entry','Punting (shared boat)',20,20,1],['Entry','York Minster',20,20,1]]},
+{d:3,dow:'Monday',title:'Edinburgh & Glasgow',route:'Darlington → Edinburgh (326 km) → Glasgow (75 km)',km:401,
+ hotel:'Holiday Inn Glasgow Airport / Express Strathclyde Park',
+ stops:[['Darlington Hotel',54.5230,-1.5530,'Start'],['Edinburgh Castle',55.9486,-3.1999,'Crown Jewels'],['Royal Mile',55.9503,-3.1883,'Holyrood link'],['Elephant House Café',55.9472,-3.1912,'Harry Potter lore'],['Glasgow Hotel',55.8642,-4.4300,'Overnight']],
+ tl:[['07:00','Hotel breakfast (£5)'],['09:00','Depart for Edinburgh (4 h)'],['12:00','Lunch (own expense)',1],['13:00','Edinburgh Castle, Royal Mile, City Chambers, Holyrood Park'],['15:00','Free time / optional afternoon tea (£40)'],['16:45','Drive to Glasgow (1.5 h)'],['18:00','Dinner (own expense)',1],['19:00','Glasgow hotel']],
+ items:[['Hotel','Glasgow 3-4★ (half twin room)',50,0,1],['Transport','Car hire share + fuel (401 km)',55,0,1],['Meals','Breakfast',9,0,1],['Meals','Lunch',12,12,1],['Meals','Dinner',20,20,1],['Entry','Edinburgh Castle',22,22,1],['Optional','Edinburgh afternoon tea',40,40,0]]},
+{d:4,dow:'Tuesday',title:'Gretna Green, Lake District & Manchester',route:'Glasgow → Gretna Green → Windermere → Manchester',km:446,
+ hotel:'Holiday Inn Express Manchester Arena / Reach at Piccadilly',
+ stops:[['Glasgow Hotel',55.8642,-4.4300,'Start'],['Gretna Green',55.0017,-3.0610,'Runaway wedding town'],['Lake Windermere',54.3800,-2.9070,'Lake District'],['Old Trafford',53.4631,-2.2913,'Man United'],['Manchester Hotel',53.4880,-2.2400,'Overnight']],
+ tl:[['07:00','Hotel breakfast (£5)'],['08:00','Depart Glasgow'],['10:30','Gretna Green (30 min)'],['12:00','Lunch (own expense)',1],['13:00','Lake Windermere (1 h)'],['15:30','Drive to Manchester'],['17:30','Old Trafford exterior'],['18:00','Dinner (own expense)',1],['20:00','Hotel']],
+ items:[['Hotel','Manchester 3-4★ (half twin room)',65,0,1],['Transport','Car hire share + fuel (446 km)',50,0,1],['Meals','Breakfast',9,0,1],['Meals','Lunch',12,12,1],['Meals','Dinner',20,20,1],['Entry','Gretna Green / Windermere (free)',0,0,1],['Optional','Windermere lake cruise',14,14,0],['Optional','Old Trafford stadium tour',25,25,0]]},
+{d:5,dow:'Wednesday',title:"Shakespeare's Stratford & Bicester Village",route:'Manchester → Stratford (195 km) → Bicester (67 km) → Swindon',km:330,
+ hotel:'Holiday Inn Express Swindon City Centre',
+ stops:[['Manchester Hotel',53.4880,-2.2400,'Start'],["Shakespeare's Birthplace",52.1948,-1.7070,'Stratford-upon-Avon'],['Bicester Village',51.8990,-1.1520,'Outlet shopping'],['Oxford (optional)',51.7548,-1.2544,'University city'],['Blenheim Palace',51.8416,-1.3610,'Optional'],['Swindon Hotel',51.5600,-1.7800,'Overnight']],
+ tl:[['07:00','Hotel breakfast (£5)'],['09:00','Depart for Stratford (3 h)'],['12:00','Lunch (own expense)',1],['12:00',"Shakespeare's Birthplace (exterior)"],['14:00','Bicester Village (3 h)'],['Afternoon','Optional: Oxford tour £30, Blenheim Palace £55'],['17:00','Dinner (own expense)',1],['20:00','Swindon hotel']],
+ items:[['Hotel','Swindon 3★ (half twin room)',42,0,1],['Transport','Car hire share + fuel (330 km)',45,0,1],['Meals','Breakfast',9,0,1],['Meals','Lunch',12,12,1],['Meals','Dinner',20,20,1],["Entry","Shakespeare's Birthplace",22,22,0],['Optional','Oxford city tour',30,30,0],['Optional','Blenheim Palace',55,55,0]]},
+{d:6,dow:'Thursday',title:'Bibury & Roman Bath',route:'Swindon → Bibury (67 km) → Bath (68 km) → Swindon (60 km)',km:195,
+ hotel:'Holiday Inn Express Swindon City Centre',
+ stops:[['Swindon Hotel',51.5600,-1.7800,'Start'],['Bibury – Arlington Row',51.7611,-1.8372,'Village of oil paintings'],['Roman Baths',51.3811,-2.3590,'Bath'],['Royal Crescent',51.3868,-2.3669,'Georgian icon'],['Jane Austen Centre',51.3830,-2.3610,'Optional']],
+ tl:[['07:00','Hotel breakfast (£5)'],['08:00','Depart for Bibury'],['10:00','Arlington Row, Roman Baths, Royal Crescent, Jane Austen Centre (2 h)'],['12:00','Lunch (own expense)',1],['17:00','Dinner (own expense)',1],['18:00','Return to Swindon']],
+ items:[['Hotel','Swindon 3★ (half twin room)',42,0,1],['Transport','Car hire share + fuel (195 km)',30,0,1],['Meals','Breakfast',9,0,1],['Meals','Lunch',12,12,1],['Meals','Dinner',20,20,1],['Entry','Roman Baths',25,25,1],['Entry','Jane Austen Centre',16,16,0]]},
+{d:7,dow:'Friday',title:'Stonehenge, Windsor & Return to London',route:'Swindon → Stonehenge (56 km) → Windsor (110 km) → London (41 km)',km:207,
+ hotel:'Tour ends at St Pancras ~19:30',
+ stops:[['Swindon Hotel',51.5600,-1.7800,'Start'],['Stonehenge',51.1789,-1.8262,'UNESCO site'],['Windsor Castle',51.4839,-0.6044,'Royal residence'],['St Pancras (End)',51.5322,-0.1263,'~19:30']],
+ tl:[['07:00','Hotel breakfast (£5)'],['08:45','Depart for Stonehenge'],['10:30','Stonehenge exterior (45 min)'],['11:00','Lunch (own expense)',1],['12:00','Drive to Windsor (2 h)'],['14:30','Windsor Castle exterior (1 h)'],['16:00','Drive to London'],['19:30','Tour ends at St Pancras']],
+ items:[['Transport','Car hire share + fuel + return (207 km)',35,0,1],['Meals','Breakfast',9,0,1],['Meals','Lunch',12,12,1],['Meals','Dinner',20,20,1],['Entry','Stonehenge',26,26,0],['Entry','Windsor Castle',33,33,0]]}
+];
+// items: [cat,name,diyCost,tourOutOfPocket,included]
+const state={sgd:920};
+const DM=[[],[],[],[],[],[],[]];
+const ST=[[[],[0],[1,2],[],[3,4,5],[],[6]],[[],[0],[1,2],[],[],[3,4],[],[5]],[[],[0],[],[1,2],[3],[],[],[4]],[[],[0],[1],[],[2],[],[3],[],[4]],[[],[0],[],[1],[2],[3,4],[],[5]],[[],[0],[1,2,3,4],[],[],[0]],[[],[0],[1],[],[],[2],[],[3]]];
+const EX={'Atrium Hotel Heathrow':{img:'https://images.trvl-media.com/lodging/28000000/27770000/27767700/27767636/cd7780fb.jpg',rate:'8.2/10',rc:'1,985',url:'https://www.expedia.com/London-Hotels-Atrium-Hotel-Heathrow.h27767636.Hotel-Information'},
+'Hyatt Place London Heathrow Airport':{img:'https://images.trvl-media.com/lodging/2000000/1720000/1717000/1716953/f3f54bea.jpg',rate:'9.0/10',rc:'4,336',url:'https://www.expedia.com/London-Hotels-Hyatt-Place-London-Heathrow-Airport.h1716953.Hotel-Information'},
+'Holiday Inn Darlington North A1M':{img:'https://images.trvl-media.com/lodging/2000000/1060000/1057300/1057270/45995276.jpg',rate:'8.6/10',rc:'596',url:'https://www.expedia.com/Darlington-Hotels-Holiday-Inn-Darlington-North-A1M.h1057270.Hotel-Information'},
+'Redworth Hall Hotel':{img:'https://images.trvl-media.com/lodging/1000000/520000/517300/517266/6949ca9b.jpg',rate:'8.4/10',rc:'1,000',url:'https://www.expedia.com/Newton-Aycliffe-Hotels-Redworth-Hall-Hotel.h517266.Hotel-Information'},
+'Holiday Inn Glasgow Airport':{img:'https://images.trvl-media.com/lodging/1000000/810000/809400/809324/01732dec.jpg',rate:'8.2/10',rc:'2,426',url:'https://www.expedia.com/Paisley-Hotels-Holiday-Inn-Glasgow-Airport.h809324.Hotel-Information'},
+'Holiday Inn Express Strathclyde Park':{img:'https://images.trvl-media.com/lodging/1000000/910000/906500/906464/f63b47e5.jpg',rate:'8.2/10',rc:'917',url:'https://www.expedia.com/Glasgow-Hotels-Holiday-Inn-Express-Strathclyde-Park-M74-JCT-5.h906464.Hotel-Information'},
+'Holiday Inn Darlington Scotch Corner':{img:'https://images.trvl-media.com/lodging/1000000/30000/25500/25497/7d311ccf.jpg',rate:'8.6/10',rc:'1,002',url:'https://www.expedia.com/Richmond-Hotels-Holiday-Inn-Darlington-A1-Scotch-Corner.h25497.Hotel-Information'},
+'Renaissance London Heathrow Hotel':{img:null,rate:'9.0/10',rc:'2,500',url:'https://www.expedia.com/London-Hotels-Renaissance-London-Heathrow-Hotel.h9944.Hotel-Information'},
+'Holiday Inn Express Swindon City Centre':{img:'https://mediaim.expedia.com/lodging/2000000/1060000/1054600/1054520/90873446.jpg',rate:'7.8/10',rc:'889',url:'https://www.expedia.com/Swindon-Hotels-Holiday-Inn-Express-Swindon-City-Centre.h1054520.Hotel-Information'}};
+const HP={'Atrium Hotel Heathrow':['Heathrow_Airport',95,130],'Hyatt Place London Heathrow Airport':['Heathrow_Airport',130,170],'Renaissance London Heathrow Hotel':['Heathrow_Airport',170,230],'Holiday Inn Darlington North A1M':['Darlington',85,110],'Holiday Inn Darlington Scotch Corner':['Scotch_Corner',85,105],'Redworth Hall Hotel':['Darlington',110,150],'Holiday Inn Glasgow Airport':['Glasgow_Airport',95,130],'Holiday Inn Express Strathclyde Park':['Strathclyde_Country_Park',75,100],'Holiday Inn Express Manchester City Centre Arena':['Manchester_Arena',95,140],'The Reach at Piccadilly Manchester':['Piccadilly_Gardens',120,170],'Holiday Inn Express Swindon City Centre':['Swindon',70,95]};
+const HOTELS=[[['Atrium Hotel Heathrow','Atrium Hotel Heathrow',null],['Hyatt Place London Heathrow Airport','Hyatt Place London Heathrow Airport',null],['Renaissance London Heathrow Hotel','Renaissance London Heathrow Hotel',null]],
+[['Holiday Inn Darlington North A1M','Holiday Inn Darlington',null],['Holiday Inn Darlington Scotch Corner','Holiday Inn Scotch Corner',null],['Redworth Hall Hotel','Redworth Hall Hotel','Redworth_Hall_Hotel']],
+[['Holiday Inn Glasgow Airport','Holiday Inn Glasgow Airport',null],['Holiday Inn Express Strathclyde Park','Holiday Inn Express Strathclyde Park',null]],
+[['Holiday Inn Express Manchester City Centre Arena','Holiday Inn Express Manchester Arena',null],['The Reach at Piccadilly Manchester','The Reach at Piccadilly Manchester',null]],
+[['Holiday Inn Express Swindon City Centre','Holiday Inn Express Swindon',null]],[['Holiday Inn Express Swindon City Centre','Holiday Inn Express Swindon',null]],[]];
+DAYS.forEach(d=>d.stops.forEach(s=>{const m=/^(\w+) Hotel$/.exec(s[0]);if(m){s[0]='Overnight area: '+m[1];s[3]='Hotel varies; approximate location'}}));
+DAYS.forEach(d=>d.items=d.items.map(i=>({cat:i[0],name:i[1],diy:i[2],tour:i[3],on:!!i[4]})));
+const f=n=>`£${Math.round(n).toLocaleString()}<small class="cv">S$${Math.round(n*RATE.SGD).toLocaleString()} · ₱${Math.round(n*RATE.PHP).toLocaleString()}</small>`;
+const cv=s=>s.replace(/£(\d+(?:\.\d+)?)/g,(m,n)=>f(+n));
+var CUR='GBP';const RATE={GBP:1,SGD:1.72,PHP:76};const CS={GBP:'£',SGD:'S$',PHP:'₱'};
+const slides=[];const maps={};
+function add(label,html,init){slides.push({label,html,init})}
+
+add('Title',`<div class="hero2"><div class="ht"><span class="pill" style="width:fit-content">Product 60465510 · Group Tour</span><h1>Best of Britain<br><span>7 Days · 6 Nights</span></h1>
+<p>London · Cambridge · York · Edinburgh · Lake District · Manchester · Stratford · Bath · Stonehenge · Windsor. A guided coach tour, compared against doing it yourself.</p>
+<div class="chips"><span class="chip">Chinese-speaking guide</span><span class="chip">Air-con coach</span><span class="chip">Twin-share 3–4★ hotels</span><span class="chip">Use ← → keys</span></div></div>
+<svg class="art" viewBox="0 0 600 480" preserveAspectRatio="xMidYMid meet"><defs><radialGradient id="sg"><stop offset="0" stop-color="#fff7c2"/><stop offset="1" stop-color="#fde68a" stop-opacity="0"/></radialGradient></defs>
+<circle cx="480" cy="90" r="80" fill="url(#sg)"/><circle cx="480" cy="90" r="38" fill="#fcd34d"/>
+<g fill="#fff" opacity=".95"><g class="cl"><ellipse cx="120" cy="80" rx="46" ry="18"/><ellipse cx="150" cy="68" rx="30" ry="18"/><ellipse cx="92" cy="70" rx="24" ry="14"/></g><g class="cl c2"><ellipse cx="340" cy="140" rx="40" ry="14"/><ellipse cx="362" cy="130" rx="24" ry="14"/></g><g class="cl c3"><ellipse cx="540" cy="200" rx="34" ry="12"/><ellipse cx="558" cy="192" rx="20" ry="11"/></g></g>
+<path d="M0 390 Q120 320 250 380 T520 360 T600 380 V480 H0Z" fill="#86efac"/><path d="M0 420 Q150 370 300 415 T600 400 V480 H0Z" fill="#4ade80"/>
+<rect x="0" y="428" width="600" height="52" fill="#475569"/><g stroke="#fde68a" stroke-width="4" stroke-dasharray="26 22"><line x1="0" y1="455" x2="600" y2="455"/></g>
+<g><rect x="40" y="300" width="150" height="130" fill="#d6b36a" rx="4"/><g fill="#a47c2a"><rect x="55" y="320" width="14" height="24" rx="7"/><rect x="85" y="320" width="14" height="24" rx="7"/><rect x="150" y="320" width="14" height="24" rx="7"/><rect x="55" y="360" width="14" height="24" rx="7"/><rect x="150" y="360" width="14" height="24" rx="7"/></g>
+<rect x="95" y="120" width="70" height="310" fill="#e7c46a"/><rect x="88" y="230" width="84" height="16" fill="#c99a3a"/><polygon points="88,120 130,40 172,120" fill="#64748b"/><rect x="128" y="14" width="4" height="30" fill="#64748b"/><circle cx="130" cy="12" r="5" fill="#fcd34d"/>
+<circle cx="130" cy="170" r="27" fill="#fff" stroke="#a47c2a" stroke-width="5"/><g stroke="#0f172a" stroke-width="3" stroke-linecap="round"><line x1="130" y1="170" x2="130" y2="152"/><line x1="130" y1="170" x2="143" y2="176"/></g>
+<g fill="#a47c2a"><rect x="112" y="270" width="10" height="44" rx="5"/><rect x="138" y="270" width="10" height="44" rx="5"/></g></g>
+<g class="bus"><rect x="0" y="368" width="150" height="62" rx="12" fill="#ef4444"/><rect x="6" y="336" width="138" height="40" rx="10" fill="#dc2626"/>
+<g fill="#bae6fd"><rect x="14" y="344" width="24" height="20" rx="4"/><rect x="46" y="344" width="24" height="20" rx="4"/><rect x="78" y="344" width="24" height="20" rx="4"/><rect x="110" y="344" width="24" height="20" rx="4"/><rect x="14" y="382" width="24" height="20" rx="4"/><rect x="46" y="382" width="24" height="20" rx="4"/><rect x="78" y="382" width="24" height="20" rx="4"/><rect x="112" y="382" width="28" height="26" rx="4"/></g>
+<g fill="#1e293b"><circle cx="34" cy="430" r="15"/><circle cx="118" cy="430" r="15"/></g><g fill="#cbd5e1"><circle cx="34" cy="430" r="6"/><circle cx="118" cy="430" r="6"/></g>
+<circle cx="96" cy="352" r="0"/><g fill="#fff"><circle cx="60" cy="326" r="7"/><circle cx="90" cy="326" r="7"/></g><circle cx="60" cy="326" r="3" fill="#0f172a"/><circle cx="90" cy="326" r="3" fill="#0f172a"/></g>
+<g class="plane"><ellipse cx="0" cy="0" rx="26" ry="7" fill="#fff"/><polygon points="-4,0 -16,-18 -6,-18 8,0" fill="#e2e8f0"/><polygon points="-4,0 -16,18 -6,18 8,0" fill="#e2e8f0"/><polygon points="-22,0 -30,-10 -24,-10 -16,0" fill="#ef4444"/></g></svg></div>`);
+
+add('Overview',`<h2>Trip Overview</h2><p class="sub">Click a day on the map legend to jump to its slide.</p>
+<div class="strip">
+<div><b class="sn" data-n="7">0</b><span>days, 6 nights</span></div>
+<div><b class="sn" data-n="${DAYS.reduce((a,d)=>a+d.km,0)}">0</b><span>km by coach</span></div>
+<div><b class="sn" data-n="6">0</b><span>hotels, 3–4★</span></div>
+<div><b class="sn" data-n="${DAYS.reduce((a,d)=>a+d.stops.length,0)}">0</b><span>places on the map</span></div></div>
+<div class="grid g2" style="grid-template-columns:2fr 1fr;grid-template-rows:minmax(0,1fr);flex:1;min-height:0"><div id="map-all" class="map" style="height:100%"></div>
+<div id="legend"><h3 style="margin:0 0 4px">Daily route <small style="color:var(--mut);font-weight:400;text-transform:none">(click a day to open)</small></h3></div></div>`,
+()=>{document.querySelectorAll('#map-all').forEach(()=>{});document.querySelectorAll('[data-n]').forEach(countUp);const m=mk('map-all');const all=[];
+ DAYS.forEach((d,i)=>{const pts=d.stops.map(s=>[s[1],s[2]]);all.push(...pts);L.polyline(pts,{color:COL[i],weight:4,opacity:.95,className:'route'}).addTo(m);
+  d.stops.forEach((s,k)=>L.marker([s[1],s[2]],{icon:pin(d.d,COL[i])}).addTo(m).bindPopup(`<b>Day ${d.d}: ${s[0]}</b><br>${s[3]}`));});
+ m.fitBounds(all);
+ document.getElementById('legend').insertAdjacentHTML('beforeend',DAYS.map((d,i)=>`<div class="lr" style="--c:${COL[i]}" onclick="go(${i+2})"><span class="ld">${d.d}</span><div><div class="lt">${d.title}</div><div class="ls">${d.dow} · ${d.km} km</div></div><span class="la">›</span></div>`).join(''));});
+
+DAYS.forEach((d,i)=>add('Day '+d.d,`<div class="banner" style="--c:${COL[i]}"><div class="ghost">${d.d}</div><div class="bl"><div class="ic">${ICON[i]}</div><div><div class="bt"><span class="pill" style="background:${COL[i]}">DAY ${d.d} · ${d.dow.toUpperCase()}</span><span class="dots">${DAYS.map((x,j)=>`<i class="${j===i?'cur':''}" onclick="go(${j+2})" title="Day ${j+1}"></i>`).join('')}</span></div><h2>${d.title}</h2><div class="rt">📍 ${d.route} <span class="km">${d.km} km</span></div></div></div><div class="dc"><div class="l">DIY est. / person</div><div class="n" id="dtot${i}"></div></div></div>
+<div class="daybody"><div class="col-scroll">${d.tl.map((t,k)=>`<div class="it" style="--c0:${COL[i]}" data-st="${ST[i][k].map(x=>x+1).join(',')}"><div class="tm"><b>${t[0]}</b>${t[2]?'<small>own expense</small>':''}</div><div class="bd">${ST[i][k].length?`<div class="nbs" title="Map pin number">${ST[i][k].map(x=>`<span class="nb" style="--c:${COL[i]}">${x+1}</span>`).join('')}</div>`:''}<div class="tt">${cv(t[1])}</div><p>${cv(DESC[i][k])}</p></div><div class="th"><span>${tIcon(t)}</span>${WK[i][k]?`<img class="ph" data-wk="${WK[i][k]}" alt="${t[1]}">`:''}</div></div>`).join('')}${HOTELS[i].length?`<div class="hotwrap"><h3>🏨 Where you may stay</h3><div class="hot">${HOTELS[i].map(h=>`<div class="hc"><div class="th"><span>🏨</span><img class="ph" ${EX[h[0]]&&EX[h[0]].img?`data-src="${EX[h[0]].img}" data-nogal="1" `:''}data-fb="${HP[h[0]][0]}" alt="${h[0]}"></div><div class="hn">${h[0]}<span class="hr" data-h="${h[0]}"></span></div><div class="hp" data-lo="${HP[h[0]][1]}" data-hi="${HP[h[0]][2]}"></div>${EX[h[0]]?`<a href="${EX[h[0]].url}" target="_blank" rel="noopener">Expedia page ↗</a>`:''}<a href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(h[0])}" target="_blank" rel="noopener">See real hotel photos ↗</a></div>`).join('')}</div><p class="note">Estimated mid-May prices per room per night (twin room), not live quotes. Google ratings open in Google Maps because they cannot be shown offline. Hotels are examples; the actual hotel is on your tour confirmation. The photo shown is of the area, not the hotel; use the link to see the real hotel.</p></div>`:`<div class="hotel">${d.hotel}</div>`}</div>
+<div><div id="map-${i}" class="map fill"></div>
+<div class="card costc"><h3 style="margin-top:0">Estimated cost per person (tick to include)</h3><table><thead><tr><th></th><th>Item</th><th class="r">GBP</th><th class="r">SGD</th><th class="r">PHP</th></tr></thead><tbody id="items${i}"></tbody></table><p class="note">Under the tour, hotel, coach, guide and hotel breakfast are covered by the package; entry, meals and optional items are paid by you.</p></div></div></div>`,
+()=>{const root=document.querySelectorAll('.slide')[i+2],cs=root.querySelector('.col-scroll'),sh=document.createElement('div');sh.className='scrollhint';cs.appendChild(sh);
+ const upd=()=>{const end=cs.scrollTop+cs.clientHeight>=cs.scrollHeight-10;sh.textContent=end?'End of Day '+d.d:'↓ Scroll for more';sh.classList.toggle('end',end)};cs.addEventListener('scroll',upd);upd();setInterval(upd,700);
+ const m=mk('map-'+i);const pts=d.stops.map(s=>[s[1],s[2]]);L.polyline(pts,{color:COL[i],weight:4,className:'route'}).addTo(m);
+ d.stops.forEach((s,k)=>{const mk2=L.marker([s[1],s[2]],{icon:pin(k+1,COL[i])}).addTo(m).bindTooltip(`${k+1}. ${s[0]}`);DM[i][k]=mk2;
+  mk2.on('mouseover',()=>{const root=document.querySelectorAll('.slide')[i+2];let first=null;root.querySelectorAll('.it').forEach(c=>{const on=c.dataset.st.split(',').includes(String(k+1));c.classList.toggle('hl',on);if(on&&!first)first=c});if(first)first.scrollIntoView({block:'nearest',behavior:'smooth'})});
+  mk2.on('mouseout',()=>document.querySelectorAll('.slide')[i+2].querySelectorAll('.it.hl').forEach(c=>c.classList.remove('hl')))});
+ document.querySelectorAll('.slide')[i+2].querySelectorAll('.it').forEach(c=>{const ids=c.dataset.st?c.dataset.st.split(',').map(x=>+x-1):[];
+  c.onmouseenter=()=>ids.forEach(k=>DM[i][k]&&DM[i][k]._icon.firstChild.classList.add('hl'));c.onmouseleave=()=>ids.forEach(k=>DM[i][k]&&DM[i][k]._icon.firstChild.classList.remove('hl'))});
+ m.fitBounds(pts,{padding:[30,30]});renderItems(i);}));
+
+add('Cost Comparison',`<h2>Tour vs. Do-It-Yourself</h2><p class="sub">Per person, twin share. DIY means booking the same trip yourself with a hire car.</p>
+<div class="pk"><label>Tour package price per person</label><span class="pkin">S$ <input type="number" id="pkg" value="${state.sgd}" min="0" step="10" oninput="state.sgd=+this.value;renderCmp();renderSum()"></span><span id="pkcv"></span></div>
+<div id="cmpbars"></div>
+<table class="ct"><thead><tr><th>Category</th><th class="r">Tour</th><th class="r">DIY</th><th class="r">Tour saves</th></tr></thead><tbody id="cmptable"></tbody></table>`,()=>renderCmp());
+
+add('Summary',`<h2>Summary</h2><p class="sub">Per person, twin share, based on the items ticked on each day page.</p><div id="summary"></div>`,()=>renderSum());
+
+function mk(id){const m=L.map(id,{scrollWheelZoom:false});
+ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18}).addTo(m);
+ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:18}).addTo(m);maps[id]=m;return m}
+const pin=(n,c)=>L.divIcon({className:'',html:`<div class="pin" style="background:${c}">${n}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
+function countUp(el){const t=+el.dataset.n;let s=null;const step=ts=>{s=s||ts;const p=Math.min((ts-s)/1200,1);el.textContent=Math.round(t*p*(2-p)).toLocaleString();if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+const A=n=>n?`<td class="r a g">£${Math.round(n).toLocaleString()}</td><td class="r a c">S$${Math.round(n*RATE.SGD).toLocaleString()}</td><td class="r a c">₱${Math.round(n*RATE.PHP).toLocaleString()}</td>`:'<td class="r a g" colspan="3">Free</td>';
+function renderItems(i){const d=DAYS[i];document.getElementById('items'+i).innerHTML=d.items.map((it,k)=>`<tr class="${it.on?'':'off'}"><td><input type="checkbox" ${it.on?'checked':''} onchange="DAYS[${i}].items[${k}].on=this.checked;renderItems(${i})"></td><td>${it.name} <span class="tag">${it.cat}</span></td>${A(it.diy)}</tr>`).join('')+`<tr class="tot"><td></td><td>Total</td>${A(d.items.filter(x=>x.on).reduce((a,x)=>a+x.diy,0))}</tr>`;
+ document.getElementById('dtot'+i).innerHTML=f(d.items.filter(x=>x.on).reduce((a,x)=>a+x.diy,0))}
+function totals(){const cats=['Hotel','Transport','Meals','Entry','Optional'];const r={};cats.forEach(c=>r[c]={t:0,d:0});const days=[];
+ DAYS.forEach(d=>{let t=0,x=0;d.items.filter(i=>i.on).forEach(i=>{r[i.cat].t+=i.tour;r[i.cat].d+=i.diy;t+=i.tour;x+=i.diy});days.push({t,d:x})});
+ const n=DAYS.length;const pkg=state.sgd/RATE.SGD;const T=cats.reduce((a,c)=>a+r[c].t,0)+pkg,D=cats.reduce((a,c)=>a+r[c].d,0);return{r,cats,days,T,D,pkg}}
+const CC={Package:'#22d3ee',Hotel:'#5b9bd5',Transport:'#a78bfa',Meals:'#fbbf24',Entry:'#34d399',Optional:'#fb7185'};
+const ms=n=>{const g=x=>Math.round(x).toLocaleString(),s=n<0?'−':'',a=Math.abs(n);return `<b class="mp">${s}S$${g(a*RATE.SGD)}</b><small class="ms">${s}£${g(a)} · ${s}₱${g(a*RATE.PHP)}</small>`};
+function renderCmp(){const o=totals(),C=['Hotel','Transport','Meals','Entry','Optional'];
+ const mx=Math.max(o.T,o.D,1),seg=(n,v)=>v>0?`<i style="width:${v/mx*100}%;background:${CC[n]}" title="${n}"><em>${v/mx>.1?n:''}</em></i>`:'';
+ const row=(l,segs,t)=>`<div class="sb"><div class="sbn">${l}</div><div class="sbt">${segs}</div><div class="sbv">${ms(t)}</div></div>`;
+ document.getElementById('cmpbars').innerHTML=row('Tour',seg('Package',o.pkg)+C.map(c=>seg(c,o.r[c].t)).join(''),o.T)+row('DIY',C.map(c=>seg(c,o.r[c].d)).join(''),o.D)+`<div class="lgd">${Object.keys(CC).map(k=>`<span><i style="background:${CC[k]}"></i>${k}</span>`).join('')}</div>`;
+ document.getElementById('pkcv').innerHTML=`≈ £${Math.round(o.pkg).toLocaleString()} · ₱${Math.round(o.pkg*RATE.PHP).toLocaleString()}`;
+ const line=(l,t,d)=>`<tr><td>${l}</td><td class="r">${t==null?'–':ms(t)}</td><td class="r">${d==null?'–':ms(d)}</td><td class="r ${(d||0)-(t||0)>=0?'good':'bad'}">${ms((d||0)-(t||0))}</td></tr>`;
+ document.getElementById('cmptable').innerHTML=line('Tour package (hotels, coach, guide, breakfast)',o.pkg,null)+C.map(c=>line(c,o.r[c].t,o.r[c].d)).join('')+`<tr class="tt"><td>Total</td><td class="r">${ms(o.T)}</td><td class="r">${ms(o.D)}</td><td class="r ${o.D-o.T>=0?'good':'bad'}">${ms(o.D-o.T)}</td></tr>`}
+function renderSum(){const o=totals(),s=o.D-o.T,pct=Math.abs(s/o.D*100).toFixed(0),el=document.getElementById('summary');
+ el.innerHTML=`<div class="vd ${s>=0?'good':'bad'}">${s>=0?'The tour is cheaper':'The tour costs more'} by ${ms(Math.abs(s))}<span>${pct}% ${s>=0?'less':'more'} than doing it yourself</span></div>
+<div class="sx"><div><label>Tour total</label>${ms(o.T)}<small class="ms2">package S$${Math.round(state.sgd).toLocaleString()} + meals, entry, extras</small></div><div><label>DIY total</label>${ms(o.D)}<small class="ms2">hotels, car hire, meals, entry</small></div></div>
+<div class="sl"><div><h3>What the package covers</h3><ul><li>6 hotel nights: ${ms(o.r.Hotel.d)} if booked yourself</li><li>Coach transport: ${ms(o.r.Transport.d)} for car hire, fuel and parking</li><li>Hotel breakfasts on 6 days</li><li>Chinese-speaking guide and a fixed route, with no driving</li></ul></div>
+<div><h3>What you pay either way</h3><ul><li>Entry tickets ticked: ${ms(o.r.Entry.t)}</li><li>Lunches, dinners and Day 1 breakfast: ${ms(o.r.Meals.t)}</li><li>Optional extras ticked: ${ms(o.r.Optional.t)}</li></ul></div></div>
+<p class="note">Package price S$${Math.round(state.sgd).toLocaleString()} per person. DIY figures are estimates of 2025 UK prices; hotel rates, car hire and tickets vary by season. A solo traveller would pay more for hotels and car hire, which makes the tour look better.</p>`}
+/* old render code removed
+ const bar=(l,t,d,m)=>`<div class="row"><span>${l}</span><div style="flex:1"><div class="bar t" style="width:${t/m*100}%"></div><div class="bar d" style="width:${d/m*100}%;margin-top:3px"></div></div><span style="width:110px">${f(t)} / ${f(d)}</span></div>`;
+ document.getElementById('catbars').innerHTML='<div class="note"><span style="color:var(--acc)">■</span> Tour (package shown under Hotel &amp; Transport row below) &nbsp;<span style="color:var(--acc2)">■</span> DIY</div>'+o.cats.map(c=>bar(c,o.r[c].t,o.r[c].d,mx)).join('')+bar('Package fee',o.pkg,0,mx);
+ const dm=Math.max(...o.days.map(x=>Math.max(x.t,x.d)),1);document.getElementById('daybars').innerHTML='<div class="note">Tour out-of-pocket (excl. package) vs DIY</div>'+o.days.map((x,i)=>bar('Day '+(i+1),x.t,x.d,dm)).join('');
+ const rows=o.cats.map(c=>`<tr><td>${c}</td><td class="r">${f(o.r[c].t)}</td><td class="r">${f(o.r[c].d)}</td><td class="r">${f(o.r[c].d-o.r[c].t)}</td></tr>`).join('')+`<tr><td>Tour package fee (hotels, coach, guide, breakfast)</td><td class="r">${f(o.pkg)}</td><td class="r">–</td><td class="r">${f(-o.pkg)}</td></tr>`;
+ document.getElementById('cmptable').innerHTML=rows;const s=o.D-o.T;
+ document.getElementById('cmpfoot').innerHTML=`<tr><td>TOTAL</td><td class="r">${f(o.T)}</td><td class="r">${f(o.D)}</td><td class="r ${s>=0?'good':'bad'}">${s>=0?'Tour saves ':'Tour costs +'}${f(Math.abs(s))}</td></tr>`}
+function renderSum(){const o=totals();const s=o.D-o.T;const pct=Math.abs(s/o.D*100).toFixed(0);const el=document.getElementById('summary');
+ const parts=[['Hotel','#38bdf8'],['Transport','#a78bfa'],['Meals','#f59e0b'],['Entry','#34d399'],['Optional','#fb7185']];const tot=parts.reduce((a,p)=>a+o.r[p[0]].d,0)||1;let acc=0;
+ const grad=parts.map(p=>{const a=acc/tot*100;acc+=o.r[p[0]].d;return `${p[1]} ${a}% ${acc/tot*100}%`}).join(',');
+ el.innerHTML=`<div class="card" style="margin-bottom:18px;display:flex;gap:30px;align-items:center;flex-wrap:wrap;justify-content:center"><div class="donut" style="background:conic-gradient(${grad})"><div><span>DIY total<br><b>${f(o.D)}</b></span></div></div><div>${parts.map(p=>`<div class="leg"><i style="background:${p[1]}"></i>${p[0]}: <b>${f(o.r[p[0]].d)}</b> (${Math.round(o.r[p[0]].d/tot*100)}%)</div>`).join('')}</div></div>
+<div class="grid g3"><div class="card stat"><div class="l">Tour total</div><div class="big" style="color:var(--acc)">${f(o.T)}</div></div><div class="card stat"><div class="l">DIY total</div><div class="big" style="color:var(--acc2)">${f(o.D)}</div></div>
+<div class="card stat"><div class="l">${s>=0?'Estimated saving with tour':'Tour is more expensive by'}</div><div class="big ${s>=0?'good':'bad'}">${f(Math.abs(s))}</div><div class="l">${pct}% ${s>=0?'cheaper':'higher'}</div></div></div>
+<div class="grid g2" style="margin-top:18px"><div class="card"><h3 style="margin-top:0">Where the tour wins</h3><ul style="padding-left:18px;line-height:1.8;font-size:14px"><li>Accommodation: ${f(o.r.Hotel.d)} DIY vs. bundled in package</li><li>Transport: ${f(o.r.Transport.d)} DIY (car hire, fuel, parking, drop-off)</li><li>Hotel breakfasts included (6 × ${f(5)})</li><li>Guide, route planning and no driving ~1,700 km on the left</li></ul></div>
+<div class="card"><h3 style="margin-top:0">What costs the same</h3><ul style="padding-left:18px;line-height:1.8;font-size:14px"><li>Entry tickets (not included in the tour): ${f(o.r.Entry.t)}</li><li>Lunches and dinners: ${f(o.r.Meals.t)} incl. Day 1 breakfast</li><li>Optional extras ticked: ${f(o.r.Optional.t)}</li></ul></div></div>
+<div class="card" style="margin-top:18px"><h3 style="margin-top:0">Verdict</h3><p style="line-height:1.7">${s>=0?`At a package price of ${f(o.pkg)}, the tour is estimated to save about <b class="good">${f(s)}</b> per person versus DIY, mainly through bundled hotels and coach transport.`:`At a package price of ${f(o.pkg)}, the tour is estimated to cost about <b class="bad">${f(-s)}</b> more per person than DIY, but it adds a guide, a fixed route and no driving.`} Solo travelers lose the room-sharing and car-sharing savings, so DIY would cost more. Adjust the package price and the ticked items to match your booking.</p>
+<p class="note">Figures are approximate public 2025 prices (GBP). Hotel rates, car hire and ticket prices vary by season; verify before booking. Package price is an editable placeholder, not a quoted price.</p></div>`}
+*/
+
+const nav=document.getElementById('nav'),deck=document.getElementById('deck');let cur=0;
+nav.innerHTML=slides.map((s,i)=>`<button onclick="go(${i})">${s.label}</button>`).join('')+`<span id="fx"><button onclick="fs(-.1)" title="Smaller text">A−</button><button onclick="fs(.1)" title="Larger text">A+</button> <small>1£ = S$<input type="number" step="0.01" value="1.72" oninput="RATE.SGD=+this.value||1;refreshAll()"> ₱<input type="number" step="0.5" value="76" oninput="RATE.PHP=+this.value||1;refreshAll()"></small></span>`;
+function fs(d){const r=document.documentElement,v=Math.max(.7,Math.min(1.8,(parseFloat(r.style.getPropertyValue('--s'))||1)+d));r.style.setProperty('--s',v.toFixed(2))}
+let HR={};try{HR=JSON.parse(localStorage.getItem('hr')||'{}')}catch(e){}
+function setRating(n){const v=prompt('Google rating for '+n+' (for example 4.5). Leave empty to clear:',HR[n]||'');if(v===null)return;const x=parseFloat(v);if(isNaN(x))delete HR[n];else HR[n]=Math.min(5,Math.max(0,x)).toFixed(1);try{localStorage.setItem('hr',JSON.stringify(HR))}catch(e){}paintRatings()}
+function paintRatings(){document.querySelectorAll('.hr').forEach(e=>{const n=e.dataset.h,r=HR[n],q=encodeURIComponent(n);e.innerHTML=(r?`<span class="rv" onclick="setRating(this.parentNode.dataset.h)" title="Click to edit">(${r}★)</span>`:(EX[n]?`<span class="rv">★ ${EX[n].rate}</span><small class="rs">Expedia · ${EX[n].rc} reviews</small>`:`<a class="gr" onclick="setRating(this.parentNode.dataset.h)">+ add rating</a>`))+`<a class="gr" href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">Google ↗</a>`})}
+function rng(a,b){const g=n=>Math.round(n);return `£${g(a)}–${g(b)}<small class="cv">S$${g(a*RATE.SGD).toLocaleString()}–${g(b*RATE.SGD).toLocaleString()} · ₱${g(a*RATE.PHP).toLocaleString()}–${g(b*RATE.PHP).toLocaleString()}</small>`}
+function rngH(a,b){const g=n=>Math.round(n).toLocaleString(),s='<span class="sp">|</span>';return `£${g(a)}–${g(b)}${s}S$${g(a*RATE.SGD)}–${g(b*RATE.SGD)}${s}₱${g(a*RATE.PHP)}–${g(b*RATE.PHP)}`}
+function paintHotels(){document.querySelectorAll('.hp').forEach(e=>{const lo=+e.dataset.lo,hi=+e.dataset.hi;e.innerHTML=`<b>${rngH(lo,hi)}</b>`});paintRatings()}
+function refreshAll(){paintHotels();DAYS.forEach((d,i)=>renderItems(i));renderCmp();renderSum()}
+slides.forEach((s,i)=>{const e=document.createElement('section');e.className='slide'+(/^(Day|Overview|Title)/.test(s.label)?' fit':'');e.innerHTML=s.html;deck.appendChild(e)});
+const inited=new Set();
+function go(n){cur=Math.max(0,Math.min(slides.length-1,n));document.querySelectorAll('.slide').forEach((e,i)=>e.classList.toggle('on',i===cur));
+ nav.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===cur));
+ document.getElementById('cnt').textContent=`${cur+1} / ${slides.length}`;document.getElementById('bar').style.width=(cur+1)/slides.length*100+'%';
+ const s=slides[cur];loadPhotos(document.querySelectorAll('.slide')[cur]);if(s.init){if(!inited.has(cur)){inited.add(cur);setTimeout(s.init,50)}else if(cur>=slides.length-2)setTimeout(s.init,0)}
+ setTimeout(()=>{const sl=document.querySelectorAll('.slide')[cur];Object.entries(maps).forEach(([id,m])=>{if(sl.contains(document.getElementById(id)))m.invalidateSize()})},260)}
+document.getElementById('prev').onclick=()=>go(cur-1);document.getElementById('next').onclick=()=>go(cur+1);
+addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'&&e.target.type==='number')return;if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+go(0);
+paintHotels();
+</script>
+</body>
 </html>
