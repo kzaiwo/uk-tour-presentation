@@ -116,6 +116,7 @@ td.r{white-space:nowrap}
 .costc .note{padding:0 16px 12px}
 .bars .row span:last-child{width:auto;min-width:150px}
 .leaflet-container{background:#0b1222}
+/* scrollbars */
 #zoom,#zoom.r,#zoom.l{transform:none!important;right:auto}
 #zoom img{max-width:min(900px,52vw)!important;max-height:68vh!important;min-width:320px!important;min-height:200px!important}
 #zoom .zh{font-size:15px;font-weight:700;background:#0b1222;border-radius:8px;padding:4px 10px;display:inline-block}
@@ -136,6 +137,69 @@ td.r{white-space:nowrap}
 @media(max-width:900px){.hero2{grid-template-columns:1fr}.hero2 h1{font-size:44px}}
 #zoom.r{left:auto;right:2vw;transform:translateY(-50%)}#zoom.l{left:2vw;right:auto;transform:translateY(-50%)}
 #zoom img{max-width:min(1200px,54vw)!important;min-width:360px!important}
+/* larger type */
+#nav button{font-size:15px}#nav b{font-size:17px}#fx{font-size:13px}
+.hero p{font-size:22px;max-width:820px}.chip{font-size:16px;padding:8px 16px}
+h3{font-size:19px}.sub{font-size:16px}.note{font-size:14px}
+.stat .l,.l{font-size:15px}.stat .n{font-size:40px}
+.it .tm{font-size:14px}.it .tt{font-size:20px}.it p{font-size:16px;line-height:1.55}
+.th{width:190px;height:130px}
+.banner .rt{font-size:16px}.banner h2,.slide.fit .banner h2{font-size:34px}.pill{font-size:15px}
+.banner .dc .l{font-size:13px}.banner .dc .n{font-size:30px}
+.hc{font-size:14px}.hc a{font-size:13px}.hotel{font-size:16px}
+.leg,.bars .row{font-size:16px}
+#legend div{font-size:inherit!important}
+.card li,.card p,.card td,.card th{font-size:16px!important}
+.card h3{font-size:19px!important}
+.costc table{font-size:17px}.costc td.r{font-size:19px}.costc td.r .cv{font-size:15px}.costc .tag{font-size:13px}
+.costc th{font-size:13px}.costc tr.tot td{font-size:20px}
+table{font-size:16px}th,td{font-size:16px}
+input[type=number]{font-size:16px;width:110px}
+#foot span,#foot button{font-size:15px}
+.donut div{font-size:14px}.donut div b{font-size:26px}
+.big{font-size:44px}.nbs small{font-size:11px}
+.leaflet-tooltip{font-size:15px;font-weight:600}
+.costc td{font-size:17px!important}.costc td.r{font-size:19px!important}.costc td.r .cv{font-size:15px!important}.costc th{font-size:13px!important}.costc tr.tot td{font-size:20px!important}.card .it p{font-size:16px!important}.costc{max-height:62%}
+.costc h3{padding:8px 14px;font-size:17px}
+.costc table{font-size:16px}
+.costc th{padding:5px 12px;font-size:12px}
+.costc td{padding:4px 12px;line-height:1.2}
+.costc td.r{font-size:18px}
+.costc td.r .cv{font-size:14px;margin-left:6px;color:#cbd5e1}
+.costc .tag{font-size:12px;padding:1px 7px}
+.costc input[type=checkbox]{width:20px;height:20px}
+.costc tr.tot td{font-size:19px;padding:7px 12px}
+.costc tr.tot td.r .cv{font-size:14px;color:#fcd34d}
+.costc .note{display:none}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#0b122288;border-radius:10px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#38bdf8,#818cf8);border-radius:10px;border:2px solid #0f172a}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#7dd3fc,#f59e0b)}
+::-webkit-scrollbar-corner{background:transparent}
+#zoom{left:50%;top:50%;transform:translate(-50%,-50%);padding:12px;border-radius:18px;max-width:94vw}
+#zoom img{max-width:min(1200px,88vw);max-height:78vh;min-width:420px;min-height:260px;object-fit:contain;background:#000;border-radius:10px}
+#zoom .zc{color:#fff;font-size:16px;font-weight:600;text-align:center;margin-top:8px}
+#zoom .zh{color:var(--acc2);font-size:13px;text-align:center;margin-top:2px}
+/* perf: no blur filters, cheap transitions */
+.slide{filter:none!important;transform:translateY(12px);transition:opacity .2s,transform .2s;visibility:hidden}
+.slide.on{transform:none;visibility:visible}
+.card{backdrop-filter:none;background:#1e293bcc}
+.slide.on .card,.slide.on .map,.slide.on .stat{animation-duration:.35s}
+h2{font-size:32px;font-weight:800;background:linear-gradient(90deg,#fff,#7dd3fc);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block;position:relative;padding-bottom:8px}
+h2:after{content:"";position:absolute;left:0;bottom:0;width:60px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.banner{background:linear-gradient(110deg,color-mix(in srgb,var(--c) 45%,#0f172a),#0f172a 70%);border:1px solid color-mix(in srgb,var(--c) 50%,transparent);box-shadow:0 10px 30px #0006;border-radius:18px;padding:16px 24px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:16px;overflow:hidden;position:relative}
+.banner .ghost{position:absolute;right:170px;top:-34px;font-size:150px;font-weight:900;color:var(--c);opacity:.12;line-height:1;pointer-events:none}
+.banner .bl{display:flex;align-items:center;gap:18px;position:relative;min-width:0}
+.banner .ic{font-size:44px;width:76px;height:76px;flex:none;border-radius:20px;display:grid;place-items:center;background:#ffffff14;border:1px solid #ffffff22}
+.banner .bt{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.banner h2{font-size:30px;margin:4px 0 0;padding-bottom:0;background:none;color:#fff;-webkit-text-fill-color:#fff}.banner h2:after{display:none}
+.banner .rt{font-size:13px;color:#cbd5e1;margin-top:4px}.banner .km{background:#ffffff1f;border-radius:10px;padding:1px 8px;margin-left:6px;font-size:12px}
+.dots{display:flex;gap:5px}.dots i{width:9px;height:9px;border-radius:50%;background:#ffffff40;cursor:pointer;transition:.2s}.dots i:hover{background:#fff}.dots i.cur{background:var(--c);width:24px;border-radius:5px}
+.banner .dc{position:relative;flex:none;text-align:center;background:#0b1222cc;border:1px solid #ffffff22;border-radius:14px;padding:8px 18px}
+.banner .dc .n{font-size:26px;font-weight:800;color:var(--acc2)}.banner .dc .l{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px}
+.slide.fit .banner h2{font-size:30px}
+@media(max-width:900px){.banner .ghost{display:none}.banner{flex-wrap:wrap}}
+/* final type scale: --s scales everything (A-/A+ in nav) */
 html{--s:1}
 body{font-size:calc(18px*var(--s))}
 #nav button{font-size:calc(17px*var(--s))}#nav b{font-size:calc(20px*var(--s))}#fx{font-size:calc(14px*var(--s))}#fx button{background:var(--panel);color:var(--text);border:1px solid #475569;border-radius:8px;padding:4px 10px;cursor:pointer;font-weight:700;font-size:15px}
@@ -153,6 +217,73 @@ table,th,td{font-size:calc(19px*var(--s))}.card li,.card p,.card td,.card th{fon
 .big{font-size:calc(52px*var(--s))}.donut div{font-size:calc(16px*var(--s))}.donut div b{font-size:calc(30px*var(--s))}
 input[type=number]{font-size:calc(18px*var(--s))}#foot span,#foot button{font-size:calc(17px*var(--s))}
 .leaflet-tooltip{font-size:calc(17px*var(--s))}#zoom .zc{font-size:calc(20px*var(--s))}#zoom .zh{font-size:calc(18px*var(--s))}
+/* (old journal theme disabled)
+:root{--bg:#fff4dc;--panel:#ffffff;--panel2:#fef3c7;--text:#1f2937;--mut:#4b5563;--acc:#2563eb;--acc2:#ea580c;--good:#15803d;--bad:#b91c1c;--ink:#1f2937}
+body{background:#fff4dc!important;color:var(--ink)}
+#nav{background:var(--ink);border-bottom:4px solid #fde047}#nav b{color:#fde047}
+#nav button{color:#e5e7eb;border:2px solid transparent;font-weight:600}#nav button:hover{background:#374151}
+#nav button.on{background:#fde047;color:var(--ink);border-color:#fff;transform:rotate(-1.5deg)}
+#fx,#fx small{color:#e5e7eb}#fx input{background:#fff;color:var(--ink);border:2px solid #fde047}#fx button{background:#fde047;color:var(--ink);border:0}
+#foot{background:var(--ink);border-top:4px solid #fde047}#foot button{background:#fde047;color:var(--ink);border:2px solid #fff;box-shadow:3px 3px 0 #0006}#foot button:hover{background:#fff}#foot span{color:#e5e7eb!important}
+#bar{background:#f97316;height:5px}
+h2{background:none!important;-webkit-text-fill-color:var(--ink)!important;color:var(--ink)!important}
+h2:after{background:#f97316!important;height:6px;border-radius:3px;width:70px}
+h3{color:#c2410c}.sub,.note{color:#4b5563}
+.card{background:#fff!important;color:var(--ink);border:3px solid var(--ink)!important;border-radius:18px;box-shadow:5px 5px 0 var(--ink);backdrop-filter:none}
+.card:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink);border-color:var(--ink)}
+.stat .l,.l{color:#4b5563}.stat .n{color:#c2410c}
+.ovs .stat:nth-child(1){background:#fde68a!important}.ovs .stat:nth-child(2){background:#bfdbfe!important}.ovs .stat:nth-child(3){background:#fbcfe8!important}.ovs .stat:nth-child(4){background:#bbf7d0!important}
+.ovs .stat .l{color:var(--ink)}
+.map{border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);border-radius:18px}
+.pill{color:var(--ink)!important;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);transform:rotate(-2deg)}
+.chip{background:#fff;color:var(--ink);border:2px solid var(--ink);font-weight:600}
+.hero2{background:#9ad3ff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink)}
+.hero2 .chip{background:#fff;color:var(--ink)}
+.hero2 h1 span{color:#dc2626}
+.banner{background:var(--c)!important;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);color:var(--ink)}
+.banner .ghost{color:var(--ink)!important;opacity:.1}
+.banner h2,.slide.fit .banner h2{color:var(--ink)!important;-webkit-text-fill-color:var(--ink)!important}
+.banner .rt{color:var(--ink)}.banner .km{background:#fff;color:var(--ink);border:2px solid var(--ink);font-weight:700}
+.banner .ic{background:#fff;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-4deg)}}
+.banner .dc{background:#fff;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}.banner .dc .n{color:#c2410c}.banner .dc .l{color:var(--ink)}
+.banner .pill{background:#fff!important}
+.dots i{background:#1f293755}.dots i:hover{background:var(--ink)}.dots i.cur{background:var(--ink)}
+.it{background:#fff!important;border:3px solid var(--ink)!important;border-radius:16px;box-shadow:4px 4px 0 var(--ink)}
+.it:hover{border-color:var(--ink);transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.it.hl{background:#fef08a!important;box-shadow:7px 7px 0 #ea580c;border-color:var(--ink)}
+.it .tm{color:var(--ink)!important;background:var(--c0,#fde68a);display:inline-block;padding:1px 10px;border-radius:8px;border:2px solid var(--ink);font-weight:800}
+.it .tt{color:var(--ink)}.it p,.card .it p{color:#374151}
+.th{background:#e5e7eb!important;border:4px solid #fff;outline:2px solid var(--ink);box-shadow:3px 4px 0 #0003;transform:rotate(-2.5deg);border-radius:6px}
+.it:nth-child(even) .th{transform:rotate(2.5deg)}.th .ph{border-radius:0}
+.nb{border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);color:var(--ink)}
+.nbs{border-left:2px dashed var(--ink)}.nbs small{color:var(--ink);font-weight:700}
+.pin{border:3px solid var(--ink);color:var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.pin.hl{box-shadow:0 0 0 4px #fde047,0 0 0 7px var(--ink)}
+.hotel,.hc{background:#fef3c7;border:2px solid var(--ink);color:var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink)}.hc a{color:#1d4ed8;font-weight:700}
+table,th,td{color:var(--ink)}th{color:#4b5563}th,td{border-bottom:2px solid #1f293722}
+.tag{background:#fde68a;color:#7c2d12;border:1.5px solid var(--ink);font-weight:700}
+.costc{background:#fff!important;border-radius:18px}
+.costc h3{background:var(--ink)!important;color:#fde047!important;border-radius:0}
+.costc tr:hover td{background:#fef3c7}
+.costc td.r{color:var(--ink)!important}.costc td.r .cv{color:#6b7280!important}
+.costc tr.tot td{background:#fde047!important;color:var(--ink)!important;border-top:3px solid var(--ink)}.costc tr.tot td.r .cv{color:#374151!important}
+tr.off td{opacity:.35}
+input[type=number]{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.bars .row span:first-child{color:#374151;font-weight:600}.t{background:#2563eb}.d{background:#f97316}.bar{border:2px solid var(--ink);border-radius:6px;height:22px}
+.donut div{background:#fff;color:#4b5563;border:3px solid var(--ink)}.donut div b{color:var(--ink)}.donut{border:3px solid var(--ink)}
+.leg i{border:2px solid var(--ink)}
+.lg{background:#fff;border:3px solid var(--ink);border-left:12px solid var(--c);box-shadow:4px 4px 0 var(--ink)}
+.lg:hover{background:#fef3c7;transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.lg b{color:#c2410c}.lg .lt{color:var(--ink)}.lg .ls{color:#4b5563}
+.good{color:#15803d}.bad{color:#b91c1c}
+#zoom{background:#fff;border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink)}
+#zoom .zc{color:var(--ink)}#zoom .zh{background:#fde047;color:var(--ink);border:2px solid var(--ink)}
+.leaflet-tooltip{background:#fff;color:var(--ink);border:2px solid var(--ink);font-weight:700}
+::-webkit-scrollbar-track{background:#fde68a;border-radius:10px}
+::-webkit-scrollbar-thumb{background:var(--ink)!important;border:2px solid #fde68a;border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:#ea580c!important}
+*/
 /* ===== Dark professional theme ===== */
 :root{--bg:#0b1220;--panel:#121c2e;--panel2:#18253b;--text:#e5e7eb;--mut:#94a3b8;--acc:#d4af37;--acc2:#d4af37;--good:#5fc48a;--bad:#e57373;--ln:#22314a}
 body{background:#0b1220!important;color:var(--text)}
@@ -216,6 +347,7 @@ input[type=number]{background:#0b1220;color:var(--text);border:1px solid var(--l
 ::-webkit-scrollbar-thumb{background:#334155!important;border:2px solid #0b1220;border-radius:10px}
 ::-webkit-scrollbar-thumb:hover{background:#d4af37!important}
 .slide.on .card,.slide.on .it{animation:rise .4s both}
+/* ===== Vibrant dark: richer blues, saturated flat accents ===== */
 :root{--bg:#0a1a33;--panel:#11284a;--panel2:#16335d;--ln:#244c82;--mut:#a9bbd6;--acc:#22d3ee;--acc2:#fbbf24;--text:#f1f5ff}
 body{background:#0a1a33!important}
 #nav,#foot{background:#071326;border-color:#244c82}#nav b{color:#22d3ee}
@@ -266,6 +398,9 @@ input[type=number]{background:#0a1a33;border:1px solid #2f5b98}
 #zoom{background:#071326;border:2px solid #22d3ee}#zoom .zh{background:#22d3ee;color:#04202e;font-weight:800}
 .leaflet-tooltip{background:#071326;border:1px solid #22d3ee}
 ::-webkit-scrollbar-track{background:#071326}::-webkit-scrollbar-thumb{background:#2f5b98!important;border-color:#071326}::-webkit-scrollbar-thumb:hover{background:#22d3ee!important}
+/* toned-down banner and time tag */
+/* emphasis: key info bigger and brighter */
+/* ===== Day page: timeline layout ===== */
 .hot{display:flex!important;flex-wrap:wrap;gap:20px!important;width:100%}
 .hc{flex:1 1 300px;min-width:0;max-width:none}
 .hc .th{height:calc(240px*var(--s))!important}
@@ -283,7 +418,7 @@ input[type=number]{background:#0a1a33;border:1px solid #2f5b98}
 .banner .ghost{align-self:center!important;line-height:1!important;margin:0 36px 0 0!important;min-width:calc(90px*var(--s));text-align:center}
 .banner .bl{align-self:center;align-items:center!important}
 .banner .bl>div{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
-.banner .bt{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:0 0 4px!important}
+.banner .bt{display:flex;align-items:center;gap:22px;margin:0 0 4px!important}
 .banner .pill{line-height:1.2;margin:0!important}.banner .dots{align-items:center}
 .banner h2{line-height:1.1!important;margin:10px 0!important;padding:0!important}
 .banner .rt{display:flex;align-items:center;gap:8px;margin:0!important}
@@ -331,6 +466,7 @@ input[type=number]{background:#0a1a33;border:1px solid #2f5b98}
 .card.costc tr.tot td{background:none!important;color:#fbbf24!important;border-top:2px solid #fbbf24;border-bottom:0}
 .card.costc tr:hover td{background:#0f2342}
 @media(max-width:1100px){.it{grid-template-columns:90px 1fr;}.it .th,.it .nbs{display:none}.it::before,.it::after{display:none}}
+/* headers: larger */
 h2{font-size:calc(62px*var(--s))!important;line-height:1.1}
 h3,.card h3{font-size:calc(32px*var(--s))!important;font-weight:800;letter-spacing:.02em}
 .banner h2,.slide.fit .banner h2{font-size:calc(62px*var(--s))!important}
@@ -382,6 +518,7 @@ h2{letter-spacing:-.5px}
 .banner .dc{background:#0a1a33;border:1px solid #244c82}.banner .dc .n{color:#fbbf24}.banner .dc .l{color:#a9bbd6}
 .dots i{background:#33557f}.dots i:hover{background:#a9bbd6}.dots i.cur{background:var(--c)}
 .it .tm{background:none;color:var(--c0)!important;padding:0;border-radius:0;font-weight:600;letter-spacing:.06em}
+/* final overrides (kept last so they win) */
 .hc .hp b small.cv{display:inline!important;margin:0 0 0 16px!important;font-size:calc(20px*var(--s))!important;font-weight:700!important;color:#e2ecff!important;white-space:nowrap}
 .hc .hp b{white-space:normal;font-size:calc(24px*var(--s));font-weight:800;color:#ffd24d}
 .hc .hp .sp{color:#5f7aa3;margin:0 12px;font-weight:400}
@@ -421,6 +558,8 @@ h2{letter-spacing:-.5px}
 #legend .lt{font-size:calc(28px*var(--s))!important;font-weight:700!important;color:#fff!important}
 #legend .ls{font-size:calc(19px*var(--s))!important;color:#a9bbd6!important;font-weight:400!important}
 #legend .la{color:#33557f!important;font-size:calc(40px*var(--s))}#legend .lr:hover .la{color:var(--c)!important}
+/* page 2 colours (last) */
+/* cost comparison + summary */
 .pk{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:6px 0 22px;padding:14px 0;border-top:1px solid #244c82;border-bottom:1px solid #244c82}
 .pk label{font-size:calc(22px*var(--s));color:#a9bbd6;font-weight:600}
 .pkin{font-size:calc(30px*var(--s));font-weight:800;color:#ffd24d;display:inline-flex;align-items:center;gap:8px}
@@ -484,6 +623,7 @@ h2{letter-spacing:-.5px}
 <div id="foot"><button id="prev">&larr; Prev</button><span id="cnt" style="color:var(--mut)"></span><button id="next">Next &rarr;</button></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+/* All GBP, per person, twin share. Costs are approximate 2025 public prices - verify before booking. */
 const COL=['#38bdf8','#a78bfa','#f472b6','#f59e0b','#34d399','#fb7185','#facc15'];
 const WK=[[null,'St_Pancras_railway_station','Big_Ben','Chinatown,_London','British_Museum',null,'Heathrow_Airport'],
 [null,'Cambridge',"King's_College_Chapel,_Cambridge",null,'York','York_Minster',null,'Darlington'],
@@ -492,7 +632,7 @@ const WK=[[null,'St_Pancras_railway_station','Big_Ben','Chinatown,_London','Brit
 [null,'Stratford-upon-Avon',null,"Shakespeare's_Birthplace",'Bicester_Village_Shopping_Centre','Blenheim_Palace',null,'Swindon'],
 [null,'Bibury','Roman_Baths_(Bath)',null,null,'Swindon'],
 [null,null,'Stonehenge',null,null,'Windsor_Castle',null,'St_Pancras_railway_station']];
-const tIcon=t=>t[2]?'37d':/Drive|Depart|Transfer|Return|Drop-off/i.test(t[1])?'694':/hotel/i.test(t[1])?'3e8':'4cd';
+const tIcon=t=>t[2]?'\ud83c\udf7d\ufe0f':/Drive|Depart|Transfer|Return|Drop-off/i.test(t[1])?'\ud83d\ude8c':/hotel/i.test(t[1])?'\ud83c\udfe8':'\ud83d\udccd';
 const DESC=[
 ['Start the day with a bite near your hotel or station; breakfast is not included on Day 1.','Gather in front of the Starbucks in the St Pancras station hall. Arrive 10 minutes early: late arrivals are not refunded.','A guided 1-hour walk past Big Ben, the Houses of Parliament, Westminster Abbey, 10 Downing Street and Buckingham Palace. Wear comfortable shoes.','Chinatown has many affordable restaurants around Gerrard Street; the guide will suggest options.','Free entry to one of the world\'s great museums: the Rosetta Stone, Egyptian mummies and the Parthenon sculptures. Then St Paul\'s Cathedral, Tower Bridge and the Tower of London.','Free choice of dinner; the guide can recommend places near the hotel.','The coach takes you to a 3-4 star hotel near Heathrow for the night.'],
 ['Continental breakfast at the hotel (about £5 per person, included).','Early start toward the university city of Cambridge (about 1.5 hours).','Walk past King\'s College Chapel, Queens\' College and the Bridge of Sighs, or punt along the River Cam (extra cost).','A relaxed lunch in Cambridge town centre, own expense.','A long 4-hour drive north to the historic city of York.','Visit York Minster, one of Europe\'s largest Gothic cathedrals, then walk the Roman walls and the medieval Shambles.','Dinner at your own expense in York.','About an hour to your hotel near Darlington.'],
@@ -516,14 +656,14 @@ function zshow(){const zi=Z.querySelector('img'),u=zs.list[zs.idx];zi.onerror=()
 function getGal(im){const raw=im.dataset.wk?im.dataset.wk.replace(/_/g,' ').replace(/\s*\(.*?\)/,''):im.dataset.q;if(!GC[raw])GC[raw]=fetch('https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrlimit=20&gsrsearch='+encodeURIComponent(raw+' filetype:bitmap')+'&prop=imageinfo&iiprop=url|size&iiurlwidth=1280&format=json&origin=*').then(r=>r.json()).then(j=>Object.values((j.query||{}).pages||{}).sort((a,b)=>a.index-b.index).filter(p=>p.imageinfo&&/\.jpe?g$/i.test(p.imageinfo[0].url)&&p.imageinfo[0].width>=900&&!/map|logo|flag|coat/i.test(p.title)).map(p=>p.imageinfo[0].thumburl)).catch(()=>[]);return GC[raw]}
 window.addEventListener('keydown',e=>{if(Z.style.display!=='block'||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;e.preventDefault();e.stopImmediatePropagation();const n=zs.list.length;if(n>1){zs.idx=(zs.idx+(e.key==='ArrowRight'?1:-1)+n)%n;zshow()}},true);
 const GC2={};
-function getGal2(im){if(im.dataset.nogal)return Promise.resolve([]);const key=im.dataset.wk||im.dataset.q;if(!GC2[key])GC2[key]=(async()=>{let out=[];const bn=u=>u.split('/').pop().replace(/^\d+px-/, '');
- if(im.dataset.wk){try{const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/media-list/'+encodeURIComponent(im.dataset.wk));const j=await r.json();for(const it of j.items||[]){if(it.type!=='image'||!it.srcset||!it.srcset.length)continue;let s=it.srcset[it.srcset.length-1].src;if(s.startsWith('//'))s='https:'+s;if(/\.svg|logo|flag|coat|icon|map|symbol|blank/i.test(s))continue;const big=s.replace(/\/(\d+)px-/,'/960px-');FB[big]=s;out.push(big)}}catch(e){console.warn('media-list',e)}
- }
+function getGal2(im){if(im.dataset.nogal)return Promise.resolve([]);const key=im.dataset.wk||im.dataset.q;if(!GC2[key])GC2[key]=(async()=>{let out=[];const bn=u=>u.split('/').pop().replace(/^\d+px-/,'');
+ if(im.dataset.wk){try{const r=await fetch('https://en.wikipedia.org/api/rest_v1/page/media-list/'+encodeURIComponent(im.dataset.wk));const j=await r.json();for(const it of j.items||[]){if(it.type!=='image'||!it.srcset||!it.srcset.length)continue;let s=it.srcset[it.srcset.length-1].src;if(s.startsWith('//'))s='https:'+s;if(/\.svg|logo|flag|coat|icon|map|symbol|blank/i.test(s))continue;const big=s.replace(/\/(\d+)px-/,'/960px-');FB[big]=s;out.push(big)}}catch(e){console.warn('media-list',e)}}
  try{const g=await getGal(im);out=out.concat(g)}catch(e){}
  const seen=new Set();return out.filter(u=>{const k=bn(u);if(seen.has(k))return false;seen.add(k);return true})})();return GC2[key]}
 function zpos(e){if(Z.style.display!=='block')return;const w=Z.offsetWidth,h=Z.offsetHeight;let x=e.clientX+26,y=e.clientY+20;if(x+w>innerWidth-8)x=e.clientX-w-26;if(x<8)x=8;if(y+h>innerHeight-8)y=innerHeight-h-8;if(y<8)y=8;Z.style.left=x+'px';Z.style.top=y+'px'}
 document.addEventListener('mousemove',zpos);
-document.addEventListener('mouseover',e=>{const c=e.target.closest&&e.target.closest('.it,.hc');const im=c&&c.querySelector('.ph.ok');if(!im){Z.style.display='none';zs.im=null;return}if(zs.im===im){zpos(e);return}zs.im=im;zs.done=false;zs.list=[im.dataset.big||im.src];zs.idx=0;Z.style.display='block';zshow();zpos(e);getGal2(im).then(g=>{if(zs.im!==im)return;const first=zs.list[0],bn=u=>u.split('/').pop().replace(/\d+px-/,'');zs.done=true;zs.list=[first,...g.filter(u=>bn(u)!==bn(first))];zshow()})});
+document.addEventListener('mouseover',e=>{const c=e.target.closest&&e.target.closest('.it,.hc');const im=c&&c.querySelector('.ph.ok');if(!im){Z.style.display='none';zs.im=null;return}if(zs.im===im){zpos(e);return}zs.im=im;zs.done=false;zs.list=[im.dataset.big||im.src];zs.idx=0;Z.style.display='block';zshow();zpos(e);getGal2(im).then(g=>{if(zs.im!==im)return;const first=zs.list[0],bn=u=>u.split('/').pop().replace(/^\d+px-/,'');zs.done=true;zs.list=[first,...g.filter(u=>bn(u)!==bn(first))];zshow()})});
+
 const ICON=['🏛️','🎓','🏰','⚽','🎭','🏞️','🗿'];
 const DAYS=[
 {d:1,dow:'Saturday',title:'London CityWalk',route:'St Pancras → Westminster → British Museum → Tower of London',km:100,
@@ -562,6 +702,9 @@ const DAYS=[
  tl:[['07:00','Hotel breakfast (£5)'],['08:45','Depart for Stonehenge'],['10:30','Stonehenge exterior (45 min)'],['11:00','Lunch (own expense)',1],['12:00','Drive to Windsor (2 h)'],['14:30','Windsor Castle exterior (1 h)'],['16:00','Drive to London'],['19:30','Tour ends at St Pancras']],
  items:[['Transport','Car hire share + fuel + return (207 km)',35,0,1],['Meals','Breakfast',9,0,1],['Meals','Lunch',12,12,1],['Meals','Dinner',20,20,1],['Entry','Stonehenge',26,26,0],['Entry','Windsor Castle',33,33,0]]}
 ];
+// items: [cat,name,diyCost,tourOutOfPocket,included]
+const state={sgd:920};
+const DM=[[],[],[],[],[],[],[]];
 const ST=[[[],[0],[1,2],[],[3,4,5],[],[6]],[[],[0],[1,2],[],[],[3,4],[],[5]],[[],[0],[],[1,2],[3],[],[],[4]],[[],[0],[1],[],[2],[],[3],[],[4]],[[],[0],[],[1],[2],[3,4],[],[5]],[[],[0],[1,2,3,4],[],[],[0]],[[],[0],[1],[],[],[2],[],[3]]];
 const EX={'Atrium Hotel Heathrow':{img:'https://images.trvl-media.com/lodging/28000000/27770000/27767700/27767636/cd7780fb.jpg',rate:'8.2/10',rc:'1,985',url:'https://www.expedia.com/London-Hotels-Atrium-Hotel-Heathrow.h27767636.Hotel-Information'},
 'Hyatt Place London Heathrow Airport':{img:'https://images.trvl-media.com/lodging/2000000/1720000/1717000/1716953/f3f54bea.jpg',rate:'9.0/10',rc:'4,336',url:'https://www.expedia.com/London-Hotels-Hyatt-Place-London-Heathrow-Airport.h1716953.Hotel-Information'},
@@ -585,6 +728,7 @@ const cv=s=>s.replace(/£(\d+(?:\.\d+)?)/g,(m,n)=>f(+n));
 var CUR='GBP';const RATE={GBP:1,SGD:1.72,PHP:76};const CS={GBP:'£',SGD:'S$',PHP:'₱'};
 const slides=[];const maps={};
 function add(label,html,init){slides.push({label,html,init})}
+
 add('Title',`<div class="hero2"><div class="ht"><span class="pill" style="width:fit-content">Product 60465510 · Group Tour</span><h1>Best of Britain<br><span>7 Days · 6 Nights</span></h1>
 <p>London · Cambridge · York · Edinburgh · Lake District · Manchester · Stratford · Bath · Stonehenge · Windsor. A guided coach tour, compared against doing it yourself.</p>
 <div class="chips"><span class="chip">Chinese-speaking guide</span><span class="chip">Air-con coach</span><span class="chip">Twin-share 3–4★ hotels</span><span class="chip">Use ← → keys</span></div></div>
@@ -600,38 +744,90 @@ add('Title',`<div class="hero2"><div class="ht"><span class="pill" style="width:
 <g class="bus"><rect x="0" y="368" width="150" height="62" rx="12" fill="#ef4444"/><rect x="6" y="336" width="138" height="40" rx="10" fill="#dc2626"/>
 <g fill="#bae6fd"><rect x="14" y="344" width="24" height="20" rx="4"/><rect x="46" y="344" width="24" height="20" rx="4"/><rect x="78" y="344" width="24" height="20" rx="4"/><rect x="110" y="344" width="24" height="20" rx="4"/><rect x="14" y="382" width="24" height="20" rx="4"/><rect x="46" y="382" width="24" height="20" rx="4"/><rect x="78" y="382" width="24" height="20" rx="4"/><rect x="112" y="382" width="28" height="26" rx="4"/></g>
 <g fill="#1e293b"><circle cx="34" cy="430" r="15"/><circle cx="118" cy="430" r="15"/></g><g fill="#cbd5e1"><circle cx="34" cy="430" r="6"/><circle cx="118" cy="430" r="6"/></g>
-<g fill="#fff"><circle cx="60" cy="326" r="7"/><circle cx="90" cy="326" r="7"/></g><circle cx="60" cy="326" r="3" fill="#0f172a"/><circle cx="90" cy="326" r="3" fill="#0f172a"/></g>
+<circle cx="96" cy="352" r="0"/><g fill="#fff"><circle cx="60" cy="326" r="7"/><circle cx="90" cy="326" r="7"/></g><circle cx="60" cy="326" r="3" fill="#0f172a"/><circle cx="90" cy="326" r="3" fill="#0f172a"/></g>
 <g class="plane"><ellipse cx="0" cy="0" rx="26" ry="7" fill="#fff"/><polygon points="-4,0 -16,-18 -6,-18 8,0" fill="#e2e8f0"/><polygon points="-4,0 -16,18 -6,18 8,0" fill="#e2e8f0"/><polygon points="-22,0 -30,-10 -24,-10 -16,0" fill="#ef4444"/></g></svg></div>`);
 
 add('Overview',`<h2>Trip Overview</h2><p class="sub">Click a day on the map legend to jump to its slide.</p>
-<div class="strip"><div><b class="sn" data-n="7">0</b><span>days, 6 nights</span></div><div><b class="sn" data-n="${DAYS.reduce((a,d)=>a+d.km,0)}">0</b><span>km by coach</span></div><div><b class="sn" data-n="6">0</b><span>hotels, 3–4★</span></div><div><b class="sn" data-n="${DAYS.reduce((a,d)=>a+d.stops.length,0)}">0</b><span>places on the map</span></div></div>
-<div class="grid g2" style="grid-template-columns:2fr 1fr;grid-template-rows:minmax(0,1fr);flex:1;min-height:0"><div id="map-all" class="map" style="height:100%"></div><div id="legend"><h3 style="margin:0 0 4px">Daily route <small style="color:var(--mut);font-weight:400;text-transform:none">(click a day to open)</small></h3></div></div>`,()=>{document.querySelectorAll('[data-n]').forEach(countUp);const m=mk('map-all');const all=[];DAYS.forEach((d,i)=>{const pts=d.stops.map(s=>[s[1],s[2]]);all.push(...pts);L.polyline(pts,{color:COL[i],weight:4,opacity:.95,className:'route'}).addTo(m);d.stops.forEach((s,k)=>L.marker([s[1],s[2]],{icon:pin(d.d,COL[i])}).addTo(m).bindPopup(`<b>Day ${d.d}: ${s[0]}</b><br>${s[3]}`));});m.fitBounds(all);document.getElementById('legend').insertAdjacentHTML('beforeend',DAYS.map((d,i)=>`<div class="lr" style="--c:${COL[i]}" onclick="go(${i+2})"><span class="ld">${d.d}</span><div><div class="lt">${d.title}</div><div class="ls">${d.dow} · ${d.km} km</div></div><span class="la">›</span></div>`).join(''));});
+<div class="strip">
+<div><b class="sn" data-n="7">0</b><span>days, 6 nights</span></div>
+<div><b class="sn" data-n="${DAYS.reduce((a,d)=>a+d.km,0)}">0</b><span>km by coach</span></div>
+<div><b class="sn" data-n="6">0</b><span>hotels, 3–4★</span></div>
+<div><b class="sn" data-n="${DAYS.reduce((a,d)=>a+d.stops.length,0)}">0</b><span>places on the map</span></div></div>
+<div class="grid g2" style="grid-template-columns:2fr 1fr;grid-template-rows:minmax(0,1fr);flex:1;min-height:0"><div id="map-all" class="map" style="height:100%"></div>
+<div id="legend"><h3 style="margin:0 0 4px">Daily route <small style="color:var(--mut);font-weight:400;text-transform:none">(click a day to open)</small></h3></div></div>`,
+()=>{document.querySelectorAll('#map-all').forEach(()=>{});document.querySelectorAll('[data-n]').forEach(countUp);const m=mk('map-all');const all=[];
+ DAYS.forEach((d,i)=>{const pts=d.stops.map(s=>[s[1],s[2]]);all.push(...pts);L.polyline(pts,{color:COL[i],weight:4,opacity:.95,className:'route'}).addTo(m);
+  d.stops.forEach((s,k)=>L.marker([s[1],s[2]],{icon:pin(d.d,COL[i])}).addTo(m).bindPopup(`<b>Day ${d.d}: ${s[0]}</b><br>${s[3]}`));});
+ m.fitBounds(all);
+ document.getElementById('legend').insertAdjacentHTML('beforeend',DAYS.map((d,i)=>`<div class="lr" style="--c:${COL[i]}" onclick="go(${i+2})"><span class="ld">${d.d}</span><div><div class="lt">${d.title}</div><div class="ls">${d.dow} · ${d.km} km</div></div><span class="la">›</span></div>`).join(''));});
 
 DAYS.forEach((d,i)=>add('Day '+d.d,`<div class="banner" style="--c:${COL[i]}"><div class="ghost">${d.d}</div><div class="bl"><div class="ic">${ICON[i]}</div><div><div class="bt"><span class="pill" style="background:${COL[i]}">DAY ${d.d} · ${d.dow.toUpperCase()}</span><span class="dots">${DAYS.map((x,j)=>`<i class="${j===i?'cur':''}" onclick="go(${j+2})" title="Day ${j+1}"></i>`).join('')}</span></div><h2>${d.title}</h2><div class="rt">📍 ${d.route} <span class="km">${d.km} km</span></div></div></div><div class="dc"><div class="l">DIY est. / person</div><div class="n" id="dtot${i}"></div></div></div>
 <div class="daybody"><div class="col-scroll">${d.tl.map((t,k)=>`<div class="it" style="--c0:${COL[i]}" data-st="${ST[i][k].map(x=>x+1).join(',')}"><div class="tm"><b>${t[0]}</b>${t[2]?'<small>own expense</small>':''}</div><div class="bd">${ST[i][k].length?`<div class="nbs" title="Map pin number">${ST[i][k].map(x=>`<span class="nb" style="--c:${COL[i]}">${x+1}</span>`).join('')}</div>`:''}<div class="tt">${cv(t[1])}</div><p>${cv(DESC[i][k])}</p></div><div class="th"><span>${tIcon(t)}</span>${WK[i][k]?`<img class="ph" data-wk="${WK[i][k]}" alt="${t[1]}">`:''}</div></div>`).join('')}${HOTELS[i].length?`<div class="hotwrap"><h3>🏨 Where you may stay</h3><div class="hot">${HOTELS[i].map(h=>`<div class="hc"><div class="th"><span>🏨</span><img class="ph" ${EX[h[0]]&&EX[h[0]].img?`data-src="${EX[h[0]].img}" data-nogal="1" `:''}data-fb="${HP[h[0]][0]}" alt="${h[0]}"></div><div class="hn">${h[0]}<span class="hr" data-h="${h[0]}"></span></div><div class="hp" data-lo="${HP[h[0]][1]}" data-hi="${HP[h[0]][2]}"></div>${EX[h[0]]?`<a href="${EX[h[0]].url}" target="_blank" rel="noopener">Expedia page ↗</a>`:''}<a href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(h[0])}" target="_blank" rel="noopener">See real hotel photos ↗</a></div>`).join('')}</div><p class="note">Estimated mid-May prices per room per night (twin room), not live quotes. Google ratings open in Google Maps because they cannot be shown offline. Hotels are examples; the actual hotel is on your tour confirmation. The photo shown is of the area, not the hotel; use the link to see the real hotel.</p></div>`:`<div class="hotel">${d.hotel}</div>`}</div>
-<div><div id="map-${i}" class="map fill"></div><div class="card costc"><h3 style="margin-top:0">Estimated cost per person (tick to include)</h3><table><thead><tr><th></th><th>Item</th><th class="r">GBP</th><th class="r">SGD</th><th class="r">PHP</th></tr></thead><tbody id="items${i}"></tbody></table><p class="note">Under the tour, hotel, coach, guide and hotel breakfast are covered by the package; entry, meals and optional items are paid by you.</p></div></div></div>`,()=>{const root=document.querySelectorAll('.slide')[i+2];const cs=root.querySelector('.col-scroll');const sh=document.createElement('div');sh.className='scrollhint';cs.appendChild(sh);const upd=()=>{const end=cs.scrollTop+cs.clientHeight>=cs.scrollHeight-10;sh.textContent=end?'End of Day '+d.d:'↓ Scroll for more';sh.classList.toggle('end',end)};cs.addEventListener('scroll',upd);upd();const m=mk('map-'+i);const pts=d.stops.map(s=>[s[1],s[2]]);L.polyline(pts,{color:COL[i],weight:4,className:'route'}).addTo(m);d.stops.forEach((s,k)=>{const mk2=L.marker([s[1],s[2]],{icon:pin(k+1,COL[i])}).addTo(m).bindTooltip(`${k+1}. ${s[0]}`);DM[i][k]=mk2;mk2.on('mouseover',()=>{const root=document.querySelectorAll('.slide')[i+2];let first=null;root.querySelectorAll('.it').forEach(c=>{const on=c.dataset.st.split(',').includes(String(k+1));c.classList.toggle('hl',on);if(on&&!first)first=c});if(first)first.scrollIntoView({block:'nearest',behavior:'smooth'})});mk2.on('mouseout',()=>document.querySelectorAll('.slide')[i+2].querySelectorAll('.it.hl').forEach(c=>c.classList.remove('hl')))});document.querySelectorAll('.slide')[i+2].querySelectorAll('.it').forEach(c=>{const ids=c.dataset.st?c.dataset.st.split(',').map(x=>+x-1):[];c.onmouseenter=()=>ids.forEach(k=>DM[i][k]&&DM[i][k]._icon.firstChild.classList.add('hl'));c.onmouseleave=()=>ids.forEach(k=>DM[i][k]&&DM[i][k]._icon.firstChild.classList.remove('hl'))});m.fitBounds(pts,{padding:[30,30]});renderItems(i);});
+<div><div id="map-${i}" class="map fill"></div>
+<div class="card costc"><h3 style="margin-top:0">Estimated cost per person (tick to include)</h3><table><thead><tr><th></th><th>Item</th><th class="r">GBP</th><th class="r">SGD</th><th class="r">PHP</th></tr></thead><tbody id="items${i}"></tbody></table><p class="note">Under the tour, hotel, coach, guide and hotel breakfast are covered by the package; entry, meals and optional items are paid by you.</p></div></div></div>`,
+()=>{const root=document.querySelectorAll('.slide')[i+2],cs=root.querySelector('.col-scroll'),sh=document.createElement('div');sh.className='scrollhint';cs.appendChild(sh);
+ const upd=()=>{const end=cs.scrollTop+cs.clientHeight>=cs.scrollHeight-10;sh.textContent=end?'End of Day '+d.d:'↓ Scroll for more';sh.classList.toggle('end',end)};cs.addEventListener('scroll',upd);upd();setInterval(upd,700);
+ const m=mk('map-'+i);const pts=d.stops.map(s=>[s[1],s[2]]);L.polyline(pts,{color:COL[i],weight:4,className:'route'}).addTo(m);
+ d.stops.forEach((s,k)=>{const mk2=L.marker([s[1],s[2]],{icon:pin(k+1,COL[i])}).addTo(m).bindTooltip(`${k+1}. ${s[0]}`);DM[i][k]=mk2;
+  mk2.on('mouseover',()=>{const root=document.querySelectorAll('.slide')[i+2];let first=null;root.querySelectorAll('.it').forEach(c=>{const on=c.dataset.st.split(',').includes(String(k+1));c.classList.toggle('hl',on);if(on&&!first)first=c});if(first)first.scrollIntoView({block:'nearest',behavior:'smooth'})});
+  mk2.on('mouseout',()=>document.querySelectorAll('.slide')[i+2].querySelectorAll('.it.hl').forEach(c=>c.classList.remove('hl')))});
+ document.querySelectorAll('.slide')[i+2].querySelectorAll('.it').forEach(c=>{const ids=c.dataset.st?c.dataset.st.split(',').map(x=>+x-1):[];
+  c.onmouseenter=()=>ids.forEach(k=>DM[i][k]&&DM[i][k]._icon.firstChild.classList.add('hl'));c.onmouseleave=()=>ids.forEach(k=>DM[i][k]&&DM[i][k]._icon.firstChild.classList.remove('hl'))});
+ m.fitBounds(pts,{padding:[30,30]});renderItems(i);}));
 
 add('Cost Comparison',`<h2>Tour vs. Do-It-Yourself</h2><p class="sub">Per person, twin share. DIY means booking the same trip yourself with a hire car.</p>
 <div class="pk"><label>Tour package price per person</label><span class="pkin">S$ <input type="number" id="pkg" value="${state.sgd}" min="0" step="10" oninput="state.sgd=+this.value;renderCmp();renderSum()"></span><span id="pkcv"></span></div>
 <div id="cmpbars"></div>
 <table class="ct"><thead><tr><th>Category</th><th class="r">Tour</th><th class="r">DIY</th><th class="r">Tour saves</th></tr></thead><tbody id="cmptable"></tbody></table>`,()=>renderCmp());
+
 add('Summary',`<h2>Summary</h2><p class="sub">Per person, twin share, based on the items ticked on each day page.</p><div id="summary"></div>`,()=>renderSum());
-function mk(id){const m=L.map(id,{scrollWheelZoom:false});L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18}).addTo(m);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:18}).addTo(m);maps[id]=m;return m}
+
+function mk(id){const m=L.map(id,{scrollWheelZoom:false});
+ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri',maxZoom:18}).addTo(m);
+ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:18}).addTo(m);maps[id]=m;return m}
 const pin=(n,c)=>L.divIcon({className:'',html:`<div class="pin" style="background:${c}">${n}</div>`,iconSize:[30,30],iconAnchor:[15,15]});
 function countUp(el){const t=+el.dataset.n;let s=null;const step=ts=>{s=s||ts;const p=Math.min((ts-s)/1200,1);el.textContent=Math.round(t*p*(2-p)).toLocaleString();if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
 const A=n=>n?`<td class="r a g">£${Math.round(n).toLocaleString()}</td><td class="r a c">S$${Math.round(n*RATE.SGD).toLocaleString()}</td><td class="r a c">₱${Math.round(n*RATE.PHP).toLocaleString()}</td>`:'<td class="r a g" colspan="3">Free</td>';
-function renderItems(i){const d=DAYS[i];document.getElementById('items'+i).innerHTML=d.items.map((it,k)=>`<tr class="${it.on?'':'off'}"><td><input type="checkbox" ${it.on?'checked':''} onchange="DAYS[${i}].items[${k}].on=this.checked;renderItems(${i})"></td><td>${it.name} <span class="tag">${it.cat}</span></td>${A(it.diy)}</tr>`).join('')+`<tr class="tot"><td></td><td>Total</td>${A(d.items.filter(x=>x.on).reduce((a,x)=>a+x.diy,0))}</tr>`;document.getElementById('dtot'+i).innerHTML=f(d.items.filter(x=>x.on).reduce((a,x)=>a+x.diy,0))}
-function totals(){const cats=['Hotel','Transport','Meals','Entry','Optional'];const r={};cats.forEach(c=>r[c]={t:0,d:0});const days=[];DAYS.forEach(d=>{let t=0,x=0;d.items.filter(i=>i.on).forEach(i=>{r[i.cat].t+=i.tour;r[i.cat].d+=i.diy;t+=i.tour;x+=i.diy});days.push({t,d:x})});const pkg=state.sgd/RATE.SGD;const T=cats.reduce((a,c)=>a+r[c].t,0)+pkg,D=cats.reduce((a,c)=>a+r[c].d,0);return{r,cats,days,T,D,pkg}}
+function renderItems(i){const d=DAYS[i];document.getElementById('items'+i).innerHTML=d.items.map((it,k)=>`<tr class="${it.on?'':'off'}"><td><input type="checkbox" ${it.on?'checked':''} onchange="DAYS[${i}].items[${k}].on=this.checked;renderItems(${i})"></td><td>${it.name} <span class="tag">${it.cat}</span></td>${A(it.diy)}</tr>`).join('')+`<tr class="tot"><td></td><td>Total</td>${A(d.items.filter(x=>x.on).reduce((a,x)=>a+x.diy,0))}</tr>`;
+ document.getElementById('dtot'+i).innerHTML=f(d.items.filter(x=>x.on).reduce((a,x)=>a+x.diy,0))}
+function totals(){const cats=['Hotel','Transport','Meals','Entry','Optional'];const r={};cats.forEach(c=>r[c]={t:0,d:0});const days=[];
+ DAYS.forEach(d=>{let t=0,x=0;d.items.filter(i=>i.on).forEach(i=>{r[i.cat].t+=i.tour;r[i.cat].d+=i.diy;t+=i.tour;x+=i.diy});days.push({t,d:x})});
+ const n=DAYS.length;const pkg=state.sgd/RATE.SGD;const T=cats.reduce((a,c)=>a+r[c].t,0)+pkg,D=cats.reduce((a,c)=>a+r[c].d,0);return{r,cats,days,T,D,pkg}}
 const CC={Package:'#22d3ee',Hotel:'#5b9bd5',Transport:'#a78bfa',Meals:'#fbbf24',Entry:'#34d399',Optional:'#fb7185'};
-const ms=n=>{const g=x=>Math.round(x).toLocaleString(),s=n<0?'−':'' ,a=Math.abs(n);return `<b class="mp">${s}S$${g(a*RATE.SGD)}</b><small class="ms">${s}£${g(a)} · ${s}₱${g(a*RATE.PHP)}</small>`;};
-function renderCmp(){const o=totals(),C=['Hotel','Transport','Meals','Entry','Optional'];const mx=Math.max(o.T,o.D,1),seg=(n,v)=>v>0?`<i style="width:${v/mx*100}%;background:${CC[n]}" title="${n}"><em>${v/mx>.1?n:''}</em></i>`:'';const row=(l,segs,t)=>`<div class="sb"><div class="sbn">${l}</div><div class="sbt">${segs}</div><div class="sbv">${ms(t)}</div></div>`;
-document.getElementById('cmpbars').innerHTML=row('Tour',seg('Package',o.pkg)+C.map(c=>seg(c,o.r[c].t)).join(''),o.T)+row('DIY',C.map(c=>seg(c,o.r[c].d)).join(''),o.D)+`<div class="lgd">${Object.keys(CC).map(k=>`<span><i style="background:${CC[k]}"></i>${k}</span>`).join('')}</div>`;document.getElementById('pkcv').innerHTML=`≈ £${Math.round(o.pkg).toLocaleString()} · ₱${Math.round(o.pkg*RATE.PHP).toLocaleString()}`;const line=(l,t,d)=>`<tr><td>${l}</td><td class="r">${t==null?'–':ms(t)}</td><td class="r">${d==null?'–':ms(d)}</td><td class="r ${(d||0)-(t||0)>=0?'good':'bad'}">${ms((d||0)-(t||0))}</td></tr>`;document.getElementById('cmptable').innerHTML=line('Tour package (hotels, coach, guide, breakfast)',o.pkg,null)+C.map(c=>line(c,o.r[c].t,o.r[c].d)).join('')+`<tr class="tt"><td>Total</td><td class="r">${ms(o.T)}</td><td class="r">${ms(o.D)}</td><td class="r ${o.D-o.T>=0?'good':'bad'}">${ms(o.D-o.T)}</td></tr>`}
-function renderSum(){const o=totals(),s=o.D-o.T,pct=Math.abs(s/o.D*100).toFixed(0),el=document.getElementById('summary');el.innerHTML=`<div class="vd ${s>=0?'good':'bad'}">${s>=0?'The tour is cheaper':'The tour costs more'} by ${ms(Math.abs(s))}<span>${pct}% ${s>=0?'less':'more'} than doing it yourself</span></div>
+const ms=n=>{const g=x=>Math.round(x).toLocaleString(),s=n<0?'−':'',a=Math.abs(n);return `<b class="mp">${s}S$${g(a*RATE.SGD)}</b><small class="ms">${s}£${g(a)} · ${s}₱${g(a*RATE.PHP)}</small>`};
+function renderCmp(){const o=totals(),C=['Hotel','Transport','Meals','Entry','Optional'];
+ const mx=Math.max(o.T,o.D,1),seg=(n,v)=>v>0?`<i style="width:${v/mx*100}%;background:${CC[n]}" title="${n}"><em>${v/mx>.1?n:''}</em></i>`:'';
+ const row=(l,segs,t)=>`<div class="sb"><div class="sbn">${l}</div><div class="sbt">${segs}</div><div class="sbv">${ms(t)}</div></div>`;
+ document.getElementById('cmpbars').innerHTML=row('Tour',seg('Package',o.pkg)+C.map(c=>seg(c,o.r[c].t)).join(''),o.T)+row('DIY',C.map(c=>seg(c,o.r[c].d)).join(''),o.D)+`<div class="lgd">${Object.keys(CC).map(k=>`<span><i style="background:${CC[k]}"></i>${k}</span>`).join('')}</div>`;
+ document.getElementById('pkcv').innerHTML=`≈ £${Math.round(o.pkg).toLocaleString()} · ₱${Math.round(o.pkg*RATE.PHP).toLocaleString()}`;
+ const line=(l,t,d)=>`<tr><td>${l}</td><td class="r">${t==null?'–':ms(t)}</td><td class="r">${d==null?'–':ms(d)}</td><td class="r ${(d||0)-(t||0)>=0?'good':'bad'}">${ms((d||0)-(t||0))}</td></tr>`;
+ document.getElementById('cmptable').innerHTML=line('Tour package (hotels, coach, guide, breakfast)',o.pkg,null)+C.map(c=>line(c,o.r[c].t,o.r[c].d)).join('')+`<tr class="tt"><td>Total</td><td class="r">${ms(o.T)}</td><td class="r">${ms(o.D)}</td><td class="r ${o.D-o.T>=0?'good':'bad'}">${ms(o.D-o.T)}</td></tr>`}
+function renderSum(){const o=totals(),s=o.D-o.T,pct=Math.abs(s/o.D*100).toFixed(0),el=document.getElementById('summary');
+ el.innerHTML=`<div class="vd ${s>=0?'good':'bad'}">${s>=0?'The tour is cheaper':'The tour costs more'} by ${ms(Math.abs(s))}<span>${pct}% ${s>=0?'less':'more'} than doing it yourself</span></div>
 <div class="sx"><div><label>Tour total</label>${ms(o.T)}<small class="ms2">package S$${Math.round(state.sgd).toLocaleString()} + meals, entry, extras</small></div><div><label>DIY total</label>${ms(o.D)}<small class="ms2">hotels, car hire, meals, entry</small></div></div>
 <div class="sl"><div><h3>What the package covers</h3><ul><li>6 hotel nights: ${ms(o.r.Hotel.d)} if booked yourself</li><li>Coach transport: ${ms(o.r.Transport.d)} for car hire, fuel and parking</li><li>Hotel breakfasts on 6 days</li><li>Chinese-speaking guide and a fixed route, with no driving</li></ul></div>
 <div><h3>What you pay either way</h3><ul><li>Entry tickets ticked: ${ms(o.r.Entry.t)}</li><li>Lunches, dinners and Day 1 breakfast: ${ms(o.r.Meals.t)}</li><li>Optional extras ticked: ${ms(o.r.Optional.t)}</li></ul></div></div>
 <p class="note">Package price S$${Math.round(state.sgd).toLocaleString()} per person. DIY figures are estimates of 2025 UK prices; hotel rates, car hire and tickets vary by season. A solo traveller would pay more for hotels and car hire, which makes the tour look better.</p>`}
-const nav=document.getElementById('nav'),deck=document.getElementById('deck');let cur=0;const state={sgd:920};const DM=[[],[],[],[],[],[],[]];
+/* old render code removed
+ const bar=(l,t,d,m)=>`<div class="row"><span>${l}</span><div style="flex:1"><div class="bar t" style="width:${t/m*100}%"></div><div class="bar d" style="width:${d/m*100}%;margin-top:3px"></div></div><span style="width:110px">${f(t)} / ${f(d)}</span></div>`;
+ document.getElementById('catbars').innerHTML='<div class="note"><span style="color:var(--acc)">■</span> Tour (package shown under Hotel &amp; Transport row below) &nbsp;<span style="color:var(--acc2)">■</span> DIY</div>'+o.cats.map(c=>bar(c,o.r[c].t,o.r[c].d,mx)).join('')+bar('Package fee',o.pkg,0,mx);
+ const dm=Math.max(...o.days.map(x=>Math.max(x.t,x.d)),1);document.getElementById('daybars').innerHTML='<div class="note">Tour out-of-pocket (excl. package) vs DIY</div>'+o.days.map((x,i)=>bar('Day '+(i+1),x.t,x.d,dm)).join('');
+ const rows=o.cats.map(c=>`<tr><td>${c}</td><td class="r">${f(o.r[c].t)}</td><td class="r">${f(o.r[c].d)}</td><td class="r">${f(o.r[c].d-o.r[c].t)}</td></tr>`).join('')+`<tr><td>Tour package fee (hotels, coach, guide, breakfast)</td><td class="r">${f(o.pkg)}</td><td class="r">–</td><td class="r">${f(-o.pkg)}</td></tr>`;
+ document.getElementById('cmptable').innerHTML=rows;const s=o.D-o.T;
+ document.getElementById('cmpfoot').innerHTML=`<tr><td>TOTAL</td><td class="r">${f(o.T)}</td><td class="r">${f(o.D)}</td><td class="r ${s>=0?'good':'bad'}">${s>=0?'Tour saves ':'Tour costs +'}${f(Math.abs(s))}</td></tr>`}
+function renderSum(){const o=totals();const s=o.D-o.T;const pct=Math.abs(s/o.D*100).toFixed(0);const el=document.getElementById('summary');
+ const parts=[['Hotel','#38bdf8'],['Transport','#a78bfa'],['Meals','#f59e0b'],['Entry','#34d399'],['Optional','#fb7185']];const tot=parts.reduce((a,p)=>a+o.r[p[0]].d,0)||1;let acc=0;
+ const grad=parts.map(p=>{const a=acc/tot*100;acc+=o.r[p[0]].d;return `${p[1]} ${a}% ${acc/tot*100}%`}).join(',');
+ el.innerHTML=`<div class="card" style="margin-bottom:18px;display:flex;gap:30px;align-items:center;flex-wrap:wrap;justify-content:center"><div class="donut" style="background:conic-gradient(${grad})"><div><span>DIY total<br><b>${f(o.D)}</b></span></div></div><div>${parts.map(p=>`<div class="leg"><i style="background:${p[1]}"></i>${p[0]}: <b>${f(o.r[p[0]].d)}</b> (${Math.round(o.r[p[0]].d/tot*100)}%)</div>`).join('')}</div></div>
+<div class="grid g3"><div class="card stat"><div class="l">Tour total</div><div class="big" style="color:var(--acc)">${f(o.T)}</div></div><div class="card stat"><div class="l">DIY total</div><div class="big" style="color:var(--acc2)">${f(o.D)}</div></div>
+<div class="card stat"><div class="l">${s>=0?'Estimated saving with tour':'Tour is more expensive by'}</div><div class="big ${s>=0?'good':'bad'}">${f(Math.abs(s))}</div><div class="l">${pct}% ${s>=0?'cheaper':'higher'}</div></div></div>
+<div class="grid g2" style="margin-top:18px"><div class="card"><h3 style="margin-top:0">Where the tour wins</h3><ul style="padding-left:18px;line-height:1.8;font-size:14px"><li>Accommodation: ${f(o.r.Hotel.d)} DIY vs. bundled in package</li><li>Transport: ${f(o.r.Transport.d)} DIY (car hire, fuel, parking, drop-off)</li><li>Hotel breakfasts included (6 × ${f(5)})</li><li>Guide, route planning and no driving ~1,700 km on the left</li></ul></div>
+<div class="card"><h3 style="margin-top:0">What costs the same</h3><ul style="padding-left:18px;line-height:1.8;font-size:14px"><li>Entry tickets (not included in the tour): ${f(o.r.Entry.t)}</li><li>Lunches and dinners: ${f(o.r.Meals.t)} incl. Day 1 breakfast</li><li>Optional extras ticked: ${f(o.r.Optional.t)}</li></ul></div></div>
+<div class="card" style="margin-top:18px"><h3 style="margin-top:0">Verdict</h3><p style="line-height:1.7">${s>=0?`At a package price of ${f(o.pkg)}, the tour is estimated to save about <b class="good">${f(s)}</b> per person versus DIY, mainly through bundled hotels and coach transport.`:`At a package price of ${f(o.pkg)}, the tour is estimated to cost about <b class="bad">${f(-s)}</b> more per person than DIY, but it adds a guide, a fixed route and no driving.`} Solo travelers lose the room-sharing and car-sharing savings, so DIY would cost more. Adjust the package price and the ticked items to match your booking.</p>
+<p class="note">Figures are approximate public 2025 prices (GBP). Hotel rates, car hire and ticket prices vary by season; verify before booking. Package price is an editable placeholder, not a quoted price.</p></div>`}
+*/
+
+const nav=document.getElementById('nav'),deck=document.getElementById('deck');let cur=0;
 nav.innerHTML=slides.map((s,i)=>`<button onclick="go(${i})">${s.label}</button>`).join('')+`<span id="fx"><button onclick="fs(-.1)" title="Smaller text">A−</button><button onclick="fs(.1)" title="Larger text">A+</button> <small>1£ = S$<input type="number" step="0.01" value="1.72" oninput="RATE.SGD=+this.value||1;refreshAll()"> ₱<input type="number" step="0.5" value="76" oninput="RATE.PHP=+this.value||1;refreshAll()"></small></span>`;
 function fs(d){const r=document.documentElement,v=Math.max(.7,Math.min(1.8,(parseFloat(r.style.getPropertyValue('--s'))||1)+d));r.style.setProperty('--s',v.toFixed(2))}
 let HR={};try{HR=JSON.parse(localStorage.getItem('hr')||'{}')}catch(e){}
@@ -643,8 +839,15 @@ function paintHotels(){document.querySelectorAll('.hp').forEach(e=>{const lo=+e.
 function refreshAll(){paintHotels();DAYS.forEach((d,i)=>renderItems(i));renderCmp();renderSum()}
 slides.forEach((s,i)=>{const e=document.createElement('section');e.className='slide'+(/^(Day|Overview|Title)/.test(s.label)?' fit':'');e.innerHTML=s.html;deck.appendChild(e)});
 const inited=new Set();
-function go(n){cur=Math.max(0,Math.min(slides.length-1,n));document.querySelectorAll('.slide').forEach((e,i)=>e.classList.toggle('on',i===cur));nav.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===cur));document.getElementById('cnt').textContent=`${cur+1} / ${slides.length}`;document.getElementById('bar').style.width=(cur+1)/slides.length*100+'%';const s=slides[cur];loadPhotos(document.querySelectorAll('.slide')[cur]);if(s.init){if(!inited.has(cur)){inited.add(cur);setTimeout(s.init,50)}else if(cur>=slides.length-2)setTimeout(s.init,0)}setTimeout(()=>{const sl=document.querySelectorAll('.slide')[cur];Object.entries(maps).forEach(([id,m])=>{if(sl.contains(document.getElementById(id)))m.invalidateSize()})},260)}
-document.getElementById('prev').onclick=()=>go(cur-1);document.getElementById('next').onclick=()=>go(cur+1);addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'&&e.target.type==='number')return;if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});go(0);paintHotels();
+function go(n){cur=Math.max(0,Math.min(slides.length-1,n));document.querySelectorAll('.slide').forEach((e,i)=>e.classList.toggle('on',i===cur));
+ nav.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===cur));
+ document.getElementById('cnt').textContent=`${cur+1} / ${slides.length}`;document.getElementById('bar').style.width=(cur+1)/slides.length*100+'%';
+ const s=slides[cur];loadPhotos(document.querySelectorAll('.slide')[cur]);if(s.init){if(!inited.has(cur)){inited.add(cur);setTimeout(s.init,50)}else if(cur>=slides.length-2)setTimeout(s.init,0)}
+ setTimeout(()=>{const sl=document.querySelectorAll('.slide')[cur];Object.entries(maps).forEach(([id,m])=>{if(sl.contains(document.getElementById(id)))m.invalidateSize()})},260)}
+document.getElementById('prev').onclick=()=>go(cur-1);document.getElementById('next').onclick=()=>go(cur+1);
+addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'&&e.target.type==='number')return;if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+go(0);
+paintHotels();
 </script>
 </body>
 </html>
